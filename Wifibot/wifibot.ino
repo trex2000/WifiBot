@@ -4,7 +4,8 @@
  *
  * Enumeration of logical inputs.
  */
-typedef enum en_input_pins {
+typedef enum en_input_pins 
+{
   EN_SIA_LIGHTSENSOR ,				/**< Lightsensor analogic input */
   EN_SID_WIFI_CONTROL_UP ,			/**< WifiControl Up. */
   EN_SID_WIFI_CONTROL_DOWN ,          /**< WifiControl Down*/
@@ -19,7 +20,8 @@ typedef enum en_input_pins {
  *
  * Enumeration of logical outputs.
  */
-typedef enum en_output_pins {
+typedef enum en_output_pins 
+{
   EN_SOD_MOTOR12_0,					/**< Motor 12 digital output 1 */
   EN_SOD_MOTOR12_1,				    /**< Motor 12 digital output 2 */
   EN_SOD_MOTOR12_2,				    /**< Motor 12 digital output 3 */
@@ -32,16 +34,36 @@ typedef enum en_output_pins {
   EN_NUMBER_OF_ELEMENTS_OUTPUTS       /**< Number of output pins  */
 } EN_OUTPUT_PINS;
 
-
+/**
+ * @brief Function prototypes
+ *
+ * Function Prototypes
+ */
 uint8_t GetLogicalInput (EN_INPUT_PINS pinId_en);
 void setLogicalOutput (EN_OUTPUT_PINS pinId_en, uint8_t value_u8);
 
-void setup() {
-  // put your setup code here, to run once:
+/**
+ * @brief Init function
+ *
+ * Put all functions to be called cyclically
+ */
+void setup() 
+{
+  initIO();
+  motorsInit();
+  lightsInit();
+}  
 
-}
-
-void loop() {
-  // put your main code here, to run repeatedly:
-
+/**
+ * @brief Cyclic loop
+ *
+ * Put all functions to be called cyclically
+ */
+void loop() 
+{
+ processADCconversion();
+ processInputBuffer();
+ motorsCyclic();
+ lightsCyclic();
+ processOutputBuffer();
 }

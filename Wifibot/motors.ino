@@ -93,7 +93,7 @@ EN_MOVEMENT_STATES motorStates_en;
  *
  *engine deceleration step
  */
-#define MOTOR_SPEED_STEP_DOWN 2u
+#define MOTOR_SPEED_STEP_DOWN 1u
 
 	
 /**

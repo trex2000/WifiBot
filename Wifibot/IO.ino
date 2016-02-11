@@ -8,6 +8,31 @@
 #define MAX_ADC_CHANNELS 6u 
 
 
+/**
+ * @brief Motor 1 Pin numbers
+ *
+ * Defines the HW pin numbers where the motor 1 is connected
+ */
+#define HW_INPUT_dir1PinA 2
+#define HW_INPUT_dir2PinA 3
+
+/**
+ * @brief Motor 2 Pin numbers
+ *
+ * Defines the HW pin numbers where the motor 2 is connected
+ */
+#define HW_INPUT_dir1PinB 4
+#define HW_INPUT_dir2PinB 5
+
+
+/**
+ * @brief Motor 1,2 PWM Pin numbers
+ *
+ * Defines the HW pin numbers where the 2 enable pins are connected. 
+ * These must be PWM capable pins to be able to control the speed of the motor
+ */
+#define HW_INPUT_speedPinA 9 
+#define HW_INPUT_speedPinB 10
 
 /**
  * @brief buffer holds the value of the inputs.
@@ -32,19 +57,32 @@ uint16_t adc_Result_u16[MAX_ADC_CHANNELS];
 uint8_t outputBuffer_u8[EN_NUMBER_OF_ELEMENTS_OUTPUTS];
 
 
+/**
+ * @brief Init function of Input/Output module
+ *
+ * Function implementation for input module initialization
+ * @return void
+ */
+void  initIO()
+{
+  pinMode(HW_INPUT_dir1PinA,OUTPUT);
+  pinMode(HW_INPUT_dir2PinA,OUTPUT);
+  pinMode(HW_INPUT_dir1PinB,OUTPUT);
+  pinMode(HW_INPUT_dir2PinB,OUTPUT);
+  pinMode(HW_INPUT_speedPinA,OUTPUT);
+  pinMode(HW_INPUT_speedPinB,OUTPUT);
+}
 
 
 /**
  * @brief Function definition for processing input buffer
  *
  * Function implementation for processing input buffer.
- * For functions, automatic links are generated when the parenthesis () follow
- * the name of the function, like Box_The_Function_Name().
- * Alternatively, you can use #Box_The_Function_Name.
  * @return void
  */
 void processInputBuffer()
 {
+  
 }
 
 
@@ -59,6 +97,10 @@ void processInputBuffer()
  */
 void processOutputBuffer()
 {
+  uint8_t forIdx_lu8=0;
+  for (forIdx_lu8=0; forIdx_lu8<EN_NUMBER_OF_ELEMENTS_OUTPUTS; forIdx_lu8++)
+  {
+  }
 }
 
 
