@@ -1,4 +1,72 @@
 
+/**
+ * @brief Defines type of physical port
+ *
+ * Defines type of physical port
+ */
+typedef enum port_type_enum
+{
+	EN_PORT_DI,				/**< Digital Input port */
+	EN_PORT_DO,				/**< Digital Output port */
+	EN_PORT_AI,				/**< Analog Input port */
+	EN_PORT_DOPWM,			/**< Digital PWM Output port */
+	EN_PORT_LAST_ELEMENT	/**< Number of port types */
+} PORT_TYPES_EN;
+
+
+/**
+ * @brief Defines the states for ADC conversion
+ *
+ * Defines the states for ADC conversion
+ */
+typedef enum en_conversion_state{
+	EN_CONVERSION_IN_PROGRESS,		/**< Current conversion in progress  */
+	EN_CONVERSION_IDLE				/**< No conversion in progress */
+} EN_CONVERSION_STATE;
+
+/**
+ * @brief New datatype used in table which connects Logical Input Definitions to Physical Input Def
+ *
+ * New datatype used in table which connects Logical Input Definitions to Physical Input Def
+ */
+typedef struct port_types_struct
+{
+	uint8_t portVal_u8;				/**< Bit position of port */
+	PORT_TYPES_EN portType_en;		/**< Type of the port ( Digital, Analog..) */
+} PORT_TYPES_ST;
+
+
+/**
+ * @brief New datatype used in table which connects Logical Outputs Definitions to Physical Outputs Def
+ *
+ * New datatype used in table which connects Logical Outputs Definitions to Physical Outputs Def
+ */
+PORT_TYPES_ST const matchingTableOutputPins_acst[EN_NUMBER_OF_ELEMENTS_OUTPUTS] = {
+	{PORTB2, EN_PORT_DO},     /**<SOD_MOTORA_1 */
+	{PORTB1, EN_PORT_DO},	 /** <SOD_MOTORA_2 */
+	{PORTD5, EN_PORT_DO},     /**<SOD_MotorB_1 */
+	{PORTD4, EN_PORT_DO},     /**<SOD_MotorB_2 */
+	{PORTB3, EN_PORT_DOPWM},  /**<SODPWM_EnableMotor1 */
+	{PORTD3, EN_PORT_DOPWM},  /**<ODPWM_EnableMotor2 */
+	{PORTC2, EN_PORT_DO},     /**<SOD_LeftFlasher */
+	{PORTC1, EN_PORT_DO},     /**<SOD_RightFlasher */
+	{PORTD6, EN_PORT_DO}      /**<SOD_LowBeam */
+};
+/**
+ * @brief New datatype used in table which connects Logical Input Definitions to Physical Input Def
+ *
+ * New datatype used in table which connects Logical Input Definitions to Physical Input Def
+ */
+PORT_TYPES_ST const matchingTableInputPins_acst[EN_NUMBER_OF_ELEMENTS_INPUT] = {
+	{A0,     EN_PORT_AI},     /**< EN_SIA_LIGHTSENSOR */
+	{PORTD7, EN_PORT_DI}, 	 /**< EN_SID_WIFI_CONTROL_UP */
+	{PORTB0, EN_PORT_DI},	 /**< EN_SID_WIFI_CONTROL_DOWN */
+	{PORTB5, EN_PORT_DI},	 /**< EN_SID_WIFI_CONTROL_RIGHT */
+	{PORTB4, EN_PORT_DI}	     /**< EN_SID_WIFI_CONTROL_LEFT */
+};
+
+
+
 
 /**
  * @brief Defines maximum number of analog channels
