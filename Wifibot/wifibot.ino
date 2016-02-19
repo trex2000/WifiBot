@@ -57,7 +57,7 @@ typedef enum flasher_states
  *
  * Function Prototypes
  */
-uint8_t GetLogicalInput (EN_INPUT_PINS pinId_en);
+uint16_t GetLogicalInput (EN_INPUT_PINS pinId_en);
 void setLogicalOutput (EN_OUTPUT_PINS pinId_en, uint8_t value_u8);
 void setFlasherActive(EN_FLASHER_STATES flaSta_en);
 /**
@@ -118,7 +118,6 @@ uint8_t debugArrIndex_u8 = 0;
 */
 void task20ms(void)
 {
-  processADCconversion();
   processInputBuffer();
   processOutputBuffer();
 }
@@ -157,7 +156,7 @@ void task60ms(void)
 */
 void task100ms(void)
 {
-  //empty
+  processADCconversion();
 };
 
 /**

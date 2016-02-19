@@ -200,7 +200,7 @@ void motorsInputsAQ()
   
   for (forIdx_lu8=0; forIdx_lu8 <MAX_CONTROL_INPUTS; forIdx_lu8++)
   { 
-     inputVal_lu8 = (0x01u&GetLogicalInput((EN_INPUT_PINS)forIdx_lu8)); /*only bit 0 is relevant, as inputs are digital*/
+     inputVal_lu8 = (uint8_t)(0x0001u&GetLogicalInput((EN_INPUT_PINS)forIdx_lu8)); /*only bit 0 is relevant, as inputs are digital*/
      inputs_lu8 = (inputs_lu8 | (inputVal_lu8<<forIdx_lu8));
   }  
   if (inputs_lu8 < (1u<<MAX_CONTROL_INPUTS))
