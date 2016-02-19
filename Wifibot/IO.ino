@@ -253,12 +253,42 @@ void processOutputBuffer()
  */
 void processADCconversion()
 {
-  static uint8_t inputIdx=0;
-  
-  if (inputIdx)
+  static uint8_t inputIdx=0, overflowFlg = 0;
+    
+  while(matchingTableInputPins_acst[inputIdx].portType_en != EN_PORT_AI)
   {
+    inputIdx++;     
+    if (inputIdx>=EN_NUMBER_OF_ELEMENTS_INPUT)
+    {
+      /*start from beginning*/
+      if (!overflowFlg)
+      {
+        inputIdx = 0;
+        overflowFlg = 1;
+      }
+      else
+      {
+        /*no analog input was found*/
+        break;
+      }      
+    }
+    else
+    {
+      /**/
+      inputIdx++;
+    }      
   }
-  
+  /*check if there was an analog input found*/
+  if (inputIdx < EN_NUMBER_OF_ELEMENTS_INPUT)
+  {
+    adc_Result_u16[inputIdx] = analogRead(matchingTableInputPins_acst[inputIdx].portVal_u8); /*this takes around 100us - do only one conversion every 100ms to minimize CPU load*/
+  }
+  else
+  {
+    /*no analog input was found was found, restart over - this is not necessary, as config is static, but the function will be called anayway, so it won't hurt to try finding one the next time.*/
+    inputIdx = 0;
+    overflowFlg = 0;       
+  }   
 }
 
 
