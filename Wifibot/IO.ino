@@ -7,6 +7,7 @@
 typedef enum port_type_enum
 {
 	EN_PORT_DI,				/**< Digital Input port */
+	EN_PORT_DI_W_PUP,		        /**< Digital Input port with internal 20k pullup*/
 	EN_PORT_DO,				/**< Digital Output port */
 	EN_PORT_AI,				/**< Analog Input port */
 	EN_PORT_DOPWM,			/**< Digital PWM Output port */
@@ -58,11 +59,11 @@ PORT_TYPES_ST const matchingTableOutputPins_acst[EN_NUMBER_OF_ELEMENTS_OUTPUTS] 
  * New datatype used in table which connects Logical Input Definitions to Physical Input Def
  */
 PORT_TYPES_ST const matchingTableInputPins_acst[EN_NUMBER_OF_ELEMENTS_INPUT] = {
-	{A0,     EN_PORT_AI},     /**< EN_SIA_LIGHTSENSOR */
 	{PORTD7, EN_PORT_DI}, 	 /**< EN_SID_WIFI_CONTROL_UP */
 	{PORTB0, EN_PORT_DI},	 /**< EN_SID_WIFI_CONTROL_DOWN */
 	{PORTB5, EN_PORT_DI},	 /**< EN_SID_WIFI_CONTROL_RIGHT */
-	{PORTB4, EN_PORT_DI}	     /**< EN_SID_WIFI_CONTROL_LEFT */
+	{PORTB4, EN_PORT_DI},	     /**< EN_SID_WIFI_CONTROL_LEFT */
+	{A0,     EN_PORT_AI},     /**< EN_SIA_LIGHTSENSOR */
 };
 
 
@@ -107,7 +108,7 @@ PORT_TYPES_ST const matchingTableInputPins_acst[EN_NUMBER_OF_ELEMENTS_INPUT] = {
  *
  * Detailed buffer holds the value of the inputs.
  */
-uint8_t inputBuffer_u8[EN_NUMBER_OF_ELEMENTS_INPUT];
+uint16_t inputBuffer_u16[EN_NUMBER_OF_ELEMENTS_INPUT];
 
 /**
  * @brief array holds the results of ADC conversion
@@ -131,14 +132,45 @@ uint8_t outputBuffer_u8[EN_NUMBER_OF_ELEMENTS_OUTPUTS];
  * Function implementation for input module initialization
  * @return void
  */
-void  initIO()
+void initIO()
 {
-  pinMode(HW_INPUT_dir1PinA,OUTPUT);
-  pinMode(HW_INPUT_dir2PinA,OUTPUT);
-  pinMode(HW_INPUT_dir1PinB,OUTPUT);
-  pinMode(HW_INPUT_dir2PinB,OUTPUT);
-  pinMode(HW_INPUT_speedPinA,OUTPUT);
-  pinMode(HW_INPUT_speedPinB,OUTPUT);
+  uint8_t forIdx_lu8;
+  /*setup input ports*/
+  for (forIdx_lu8; forIdx_lu8 < EN_NUMBER_OF_ELEMENTS_INPUT; forIdx_lu8)
+  {
+    switch (matchingTableInputPins_acst[forIdx_lu8].portType_en)    
+    {
+      case EN_PORT_AI:
+        pinMode(matchingTableInputPins_acst[forIdx_lu8].portVal_u8,INPUT);
+      break;
+      
+      case EN_PORT_DI_W_PUP:
+        pinMode(matchingTableInputPins_acst[forIdx_lu8].portVal_u8,INPUT_PULLUP);
+      break;
+      
+      case EN_PORT_DI:              
+      default:
+        pinMode(matchingTableInputPins_acst[forIdx_lu8].portVal_u8,INPUT);
+      break;     
+      
+    }
+  }
+
+  /*setup output ports*/
+  for (forIdx_lu8; forIdx_lu8 < EN_NUMBER_OF_ELEMENTS_OUTPUTS; forIdx_lu8)
+  {
+      switch(matchingTableOutputPins_acst[forIdx_lu8].portType_en)
+      {
+        case EN_PORT_DO:
+        case EN_PORT_DOPWM:
+            pinMode(matchingTableOutputPins_acst[forIdx_lu8].portVal_u8, OUTPUT);
+        break;
+        default:
+            /*Some incorrect configuration, set the pin to input for safety*/
+            pinMode(matchingTableOutputPins_acst[forIdx_lu8].portVal_u8,INPUT);
+        break;
+      }      
+  }
 }
 
 
@@ -150,7 +182,27 @@ void  initIO()
  */
 void processInputBuffer()
 {
-  
+   uint8_t forIdx_lu8=0;
+  /*process input ports*/
+  for (forIdx_lu8; forIdx_lu8 < EN_NUMBER_OF_ELEMENTS_INPUT; forIdx_lu8)
+  {
+    switch (matchingTableInputPins_acst[forIdx_lu8].portType_en)    
+    {
+      case EN_PORT_AI:
+           inputBuffer_u16[forIdx_lu8] = adc_Result_u16 [forIdx_lu8];
+      break;
+      
+      case EN_PORT_DI_W_PUP:
+      case EN_PORT_DI:              
+           inputBuffer_u16[forIdx_lu8] = digitalRead(matchingTableInputPins_acst[forIdx_lu8].portVal_u8);
+      break;
+      
+      
+      default: /*do nothing*/
+      break;     
+      
+    }
+  }
 }
 
 
@@ -168,6 +220,27 @@ void processOutputBuffer()
   uint8_t forIdx_lu8=0;
   for (forIdx_lu8=0; forIdx_lu8<EN_NUMBER_OF_ELEMENTS_OUTPUTS; forIdx_lu8++)
   {
+     switch(matchingTableOutputPins_acst[forIdx_lu8].portType_en)
+     {
+       case EN_PORT_DOPWM:
+              analogWrite(matchingTableOutputPins_acst[forIdx_lu8].portVal_u8, outputBuffer_u8[forIdx_lu8]);  /*write the output */
+       break;
+       case EN_PORT_DO:
+            if (outputBuffer_u8[forIdx_lu8]>0)
+            {
+                digitalWrite(matchingTableOutputPins_acst[forIdx_lu8].portVal_u8,1);
+            }
+            else
+            {
+                digitalWrite(matchingTableOutputPins_acst[forIdx_lu8].portVal_u8,0);
+            }
+            
+       break;
+       default:
+           /*some invalid configuration has been set, it's better to disable the output*/
+           digitalWrite(matchingTableOutputPins_acst[forIdx_lu8].portVal_u8,0);
+       break;
+     }     
   }
 }
 
@@ -180,6 +253,12 @@ void processOutputBuffer()
  */
 void processADCconversion()
 {
+  static uint8_t inputIdx=0;
+  
+  if (inputIdx)
+  {
+  }
+  
 }
 
 
@@ -190,7 +269,7 @@ void processADCconversion()
  * @param pinId_en logical input pin name. range: EN_INPUT_PINS
  * @return @c state of the pin.
  */
-uint8_t GetLogicalInput (EN_INPUT_PINS pinId_en)
+uint16_t GetLogicalInput (EN_INPUT_PINS pinId_en)
 {	
   if(pinId_en>=EN_NUMBER_OF_ELEMENTS_INPUT)
   {
@@ -198,7 +277,7 @@ uint8_t GetLogicalInput (EN_INPUT_PINS pinId_en)
   }
   else
   {
-      return inputBuffer_u8[pinId_en];	
+      return inputBuffer_u16[pinId_en];	
   }
 }
 
