@@ -2,6 +2,37 @@
 
 
 /**
+* @brief Implementation of bit field
+*
+* mplementation of function that handles the initialization of motor control
+**/
+
+
+struct BIT {
+	uint8_t  b0     :1;  // bit 0 single bit
+	uint8_t  b1     :1;  // bit 1 single bit
+	uint8_t  b2		:1;  // bit 2 single bit
+	uint8_t  b3		:1;  // bit 3 single bit
+	uint8_t  b4		:1;  // bit 4 single bit
+	uint8_t  b5		:1;  // bit 5 single bit
+	uint8_t  b6		:1;  // bit 6 single bit
+	uint8_t  b7		:1;  // bit 7 single bit
+};
+
+
+/**
+* @brief Implementation of union bit field
+*
+* mplementation of function that handles the initialization of motor control
+**/
+
+union flags8 {
+	uint8_t  byte;
+	struct BIT bits;
+};
+
+
+/**
  * @brief Enumeration of logical inputs
  *
  * Enumeration of logical inputs.

@@ -1,33 +1,4 @@
 
-/**
-* @brief Implementation of bit field
-*
-* mplementation of function that handles the initialization of motor control
-**/
-
-
-struct BIT {
-	uint8_t  b0     :1;  // bit 0 single bit
-	uint8_t  b1     :1;  // bit 1 single bit
-	uint8_t  b2		:1;  // bit 2 single bit
-	uint8_t  b3		:1;  // bit 3 single bit
-	uint8_t  b4		:1;  // bit 4 single bit
-	uint8_t  b5		:1;  // bit 5 single bit
-	uint8_t  b6		:1;  // bit 6 single bit
-	uint8_t  b7		:1;  // bit 7 single bit
-};
-
-
-/**
-* @brief Implementation of union bit field
-*
-* mplementation of function that handles the initialization of motor control
-**/
-
-union flags8 {
-	uint8_t  byte;
-	struct BIT bits;
-};
 
 
 /**
@@ -64,6 +35,7 @@ typedef enum en_input_states {
 	EN_INPUT_STATE_INVALID,				/**< Idle */
 	EN_NUMBER_OF_ELEMENTS_INPUT_STATES            /**< Number of states*/
 } EN_INPUT_STATES;
+
 
 /**
  * @brief Number of control inputs
@@ -110,27 +82,36 @@ EN_INPUT_STATES inputStatesTruthTable[1u<<MAX_CONTROL_INPUTS]=
  *  After the input aquistion function processes the physical input
  *  combinations, one state will be chosen from the enum above.
  */
-EN_INPUT_STATES currentInputState_en;
-/**
- * @brief union of flags
- *
- *  union of flags
- */
-flags8 flags8_motors_u;
+EN_INPUT_STATES currentInputState_en, oldInputState_en;
+
 
 /**
- * @brief enum of states
+ * @brief Structure holding the states of the motor
  *
- *  enum of states
+ *  Each motor has a speed (0-255u) and direction:
+ *  0: forward
+ *  1: reverse 
  */
-uint8_t motorSpeed_u8;
-/**
- * @brief enum of states
+typedef struct struct_motors
+{
+  uint8_t Speed_u8;
+  uint8_t Direction_b:1; 
+}ST_MOTORS;
+
+
+/*
+ * @brief enum of motor's states
  *
- *  enum of states
+ *  enum of motor's states
  */
 EN_MOVEMENT_STATES motorStates_en;
 
+/**
+ * @brief Left and right motors
+ *
+ * Left and right motors
+ */
+ST_MOTORS motorLeft_st, motorRight_st;
 
 /**
  * @brief maximum engine duty cycle
@@ -163,10 +144,15 @@ EN_MOVEMENT_STATES motorStates_en;
 */
 void motorsInit()
 {
+  /*motor states*/
   motorStates_en=EN_STATE_IDLE;
-  flags8_motors_u.byte=0;
-  motorSpeed_u8=0;
+  motorLeft_st.Speed_u8 = 0u;
+  motorRight_st.Speed_u8 = 0;
+  motorLeft_st.Direction_b =0;
+  motorRight_st.Direction_b =0;
+  /*input states*/
   currentInputState_en = EN_INPUT_STATE_IDLE; 
+  oldInputState_en = EN_INPUT_STATE_IDLE;  
 }
 
 
@@ -224,39 +210,65 @@ void motorsInputsAQ()
 */
 void motorsSM()
 {	
-        switch(motorStates_en)
-	{
-		case EN_STATE_ACCELERATION:
-			if ((motorSpeed_u8+MOTOR_SPEED_STEP_UP)<=MAX_MOTOR_SPEED)
+  switch(motorStates_en)
+  {
+    case EN_STATE_ACCELERATION:
+			if ((motorLeft_st.motorSpeed_u8+MOTOR_SPEED_STEP_UP)<=MAX_MOTOR_SPEED)
 			{
 				
-				motorSpeed_u8+=MOTOR_SPEED_STEP_UP;
+				motorLeft_st.motorSpeed_u8+=MOTOR_SPEED_STEP_UP;
 			}
 			else
 			{
 				
-				motorSpeed_u8=MAX_MOTOR_SPEED;
+				motorLeft_st.motorSpeed_u8=MAX_MOTOR_SPEED;
 			}
-		break;
-		case EN_STATE_DECELERATION:
-			if ((motorSpeed_u8-MOTOR_SPEED_STEP_DOWN)>=0)
+			if ((motorLeft_st.motorSpeed_u8+MOTOR_SPEED_STEP_UP)<=MAX_MOTOR_SPEED)
 			{
 				
-				motorSpeed_u8-=MOTOR_SPEED_STEP_DOWN;
-			
+				motorLeft_st.motorSpeed_u8+=MOTOR_SPEED_STEP_UP;
+			}
+			else
+			{
+				
+				motorLeft_st.motorSpeed_u8=MAX_MOTOR_SPEED;
+			}
+
+    break;
+    case EN_STATE_DECELERATION:
+                        if ((motorLeft_st.motorSpeed_u8-MOTOR_SPEED_STEP_DOWN)>=0)
+                        {				
+                          motorSpeed_u8-=MOTOR_SPEED_STEP_DOWN;			
 			}
 			else
 			{
 				motorSpeed_u8=0;
 			}
-		break;
-		case EN_STATE_STEERING_LEFT:
-		break;
-		case EN_STATE_STEERING_RIGHT:
-		break;
-		default:
-		break;
-	}		
+			if ((motorLeft_st.motorSpeed_u8+MOTOR_SPEED_STEP_UP)<=MAX_MOTOR_SPEED)
+			{
+				
+				motorLeft_st.motorSpeed_u8+=MOTOR_SPEED_STEP_UP;
+			}
+			else
+			{
+				
+				motorLeft_st.motorSpeed_u8=MAX_MOTOR_SPEED;
+			}
+
+  break;  
+  case EN_STATE_STEERING_LEFT:
+  break;
+  
+  case EN_STATE_STEERING_RIGHT:
+  break;
+  case EN_STATE_IDLE:
+       motorLeft_st.motorSpeed_u8 = 0u;
+       motorRight_st.motorSpeed_u8 = 0u;
+  break;
+  
+  default:
+  break;
+ }		
 }
 
 
@@ -271,7 +283,7 @@ void motorsSM()
 void motorsActuator()
 {
 	
-	if (motorSpeed_u8>0)
+	if (motorLeft_st.motorSpeed_u8>0)
 	{
 		setLogicalOutput(EN_SOD_MOTORA_1, 1);
 		setLogicalOutput(EN_SOD_MOTORA_2, 0);
