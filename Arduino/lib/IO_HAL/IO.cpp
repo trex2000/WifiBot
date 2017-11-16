@@ -362,6 +362,7 @@ void processDigitalOutputPWM(EN_OUTPUT_PINS bufferIndex_len) {
 				OCR2B =tempValue_lu8;
 				break;
 			case EN_SODPWM_BRAKE_LIGHT:
+				//Turn off the pin when pwm duty cycle will be 0
 				if(tempValue_lu8 == 0)
 				{
 	   			DDRD &= ~(1<<matchingTableOutputPins_acst[bufferIndex_len].portVal_u8);
