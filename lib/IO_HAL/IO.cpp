@@ -281,7 +281,6 @@ void initIO()
 				break;
 				case EN_PORT_D:
 					 DDRD |= (1 << matchingTableOutputPins_acst[Index_len].portVal_u8);
-
 				break;
 
 				default:
@@ -298,6 +297,10 @@ void initIO()
 
 			TCCR2B |= (1 << CS22) |(1 << CS21)|(1 << CS20);
 			// set prescaler to 1024 and starts PWM
+
+
+			TCCR0A = _BV(COM0A1)  | _BV(WGM01) | _BV(WGM00);
+			TCCR0B = _BV(CS00) | _BV(CS02);
 }
 
 
@@ -359,8 +362,7 @@ void processDigitalOutputPWM(EN_OUTPUT_PINS bufferIndex_len) {
 				OCR2B =tempValue_lu8;
 				break;
 			case EN_SODPWM_BRAKE_LIGHT:
-				Serial.println(tempValue_lu8);
-				OCR0A =tempValue_lu8;
+				OCR0A = tempValue_lu8;
 				break;
 
 			default:

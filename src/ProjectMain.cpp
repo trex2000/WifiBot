@@ -226,11 +226,11 @@ void task1000ms(void) {
  */
 void timer0_init()
 {
-	DDRD=(1<<PORTD6);/**< digital pin6 is an output for lowbeam*/
-	TCCR0A=(1<<COM0A1);		/**<Clear OC0A on Compare Match */
-	TIMSK0=(1<<TOIE0);		/**<enable interrupt on compare */
-	sei();
-	TCCR0B=(1<<CS02)|(1<<CS00); /**< sets the prescaler to 1024;*/
+	//DDRD=(1<<PORTD6);/**< digital pin6 is an output for lowbeam*/
+	//TCCR0A=(1<<COM0A1);		/**<Clear OC0A on Compare Match */
+	//TIMSK0=(1<<TOIE0);		/**<enable interrupt on compare */
+	//sei();
+	//TCCR0B=(1<<CS02)|(1<<CS00); /**< sets the prescaler to 1024;*/
 }
 
 /**

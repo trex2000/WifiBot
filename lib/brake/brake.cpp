@@ -207,7 +207,7 @@ void brakeActuator()
 {
 	if(brakeStates_en == EN_BRAKE_STATE_BRAKING)
 	{
-		setOutputPin(EN_SODPWM_BRAKE_LIGHT, 100);
+		setOutputPin(EN_SODPWM_BRAKE_LIGHT, 99);
 	}
 
 	if(brakeStates_en == EN_BRAKE_STATE_STOP_LIGHT)
