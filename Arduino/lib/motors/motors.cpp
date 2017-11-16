@@ -337,26 +337,26 @@ void motorsActuator()
 
 	if (FLAG_STEERING_LEFT_ACTIVE)
 	{
-		setOutputPin (EN_SOD_MOTOR12_0, 1);
-		setOutputPin (EN_SOD_MOTOR12_1, 0);
-		setOutputPin (EN_SOD_MOTOR12_2, 0);
-		setOutputPin (EN_SOD_MOTOR12_3, 1);
+		setOutputPin (EN_SOD_MOTOR12_0, 0);
+		setOutputPin (EN_SOD_MOTOR12_1, 1);
+		setOutputPin (EN_SOD_MOTOR12_2, 1);
+		setOutputPin (EN_SOD_MOTOR12_3, 0);
 	}
 	else
 	{
 		if (FLAG_STEERING_RIGHT_ACTIVE)
 		{
-			setOutputPin (EN_SOD_MOTOR12_0, 0);
-			setOutputPin (EN_SOD_MOTOR12_1, 1);
-			setOutputPin (EN_SOD_MOTOR12_2, 1);
-			setOutputPin (EN_SOD_MOTOR12_3, 0);
+			setOutputPin (EN_SOD_MOTOR12_0, 1);
+			setOutputPin (EN_SOD_MOTOR12_1, 0);
+			setOutputPin (EN_SOD_MOTOR12_2, 0);
+			setOutputPin (EN_SOD_MOTOR12_3, 1);
 		}
 		else
 		{
-			setOutputPin (EN_SOD_MOTOR12_0, 1);
-			setOutputPin (EN_SOD_MOTOR12_1, 0);
-			setOutputPin (EN_SOD_MOTOR12_2, 1);
-			setOutputPin (EN_SOD_MOTOR12_3, 0);
+			setOutputPin (EN_SOD_MOTOR12_0, 0);
+			setOutputPin (EN_SOD_MOTOR12_1, 1);
+			setOutputPin (EN_SOD_MOTOR12_2, 0);
+			setOutputPin (EN_SOD_MOTOR12_3, 1);
 		}
 	}
 
