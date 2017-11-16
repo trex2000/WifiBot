@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>rc car</title> 
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+  <style>
+    /* Customization of standard HTML styles */
+    p {
+      margin-top: 0em;
+      margin-bottom: 0.5em;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 0em;
+      margin-bottom: 0.25em;
+    }
+    ul, ol {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+    table {
+      border-spacing: 1em;
+    }
+    th, td {
+      text-align: left;
+    }
+
+    /* Customization of ReqView styles */
+    #heading {
+      margin: 1em;
+      margin-top: 2em;
+    }
+    #reqviewTable {
+      margin: 1em;
+    }
+    .reqAttachment {
+        margin-bottom: -2px;
+        padding: 3px 0px;
+        border-radius: 5px;
+    }
+    .reqAttachment img {
+        max-width: 90%;
+        margin: 10px;
+    }
+    /* Customization of our styles */
+    .deleted {
+      color: #666;
+      text-decoration: line-through;
+    }
+    .id-col {
+      min-width: 5em;
+      max-width: 10%;
+      vertical-align: top;
+    }
+    .description-col {
+      min-width: 10em;
+      max-width: 60%;
+      vertical-align: top;
+    }
+    .discussion-col {
+      min-width: 12em;
+      max-width: 30%;
+      vertical-align: top;
+      /*display: none;*/
+    }    
+    .links-col {
+      min-width: 12em;
+      max-width: 30%;
+      vertical-align: top;
+    }
+    .status-col {
+      min-width: 6em;
+      max-width: 10%;
+      vertical-align: top;
+    }
+    .comment {
+      font-size: 0.9em;
+    }
+    .comment-text {
+      padding-top: 5px;
+      padding-bottom: 10px;
+    }
+    .attachment {
+      font-style: italic;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+    .links-type-name {
+      font-style: italic;
+    }
+    .link {
+      margin-left: 5px;
+      font-size: 0.9em;
+    }
+    .html-content table {
+      border: 1px solid black;
+      border-collapse: collapse;
+      width: auto;
+    }
+    .html-content th, .html-content td {
+        border: 1px solid #b5bcc7;
+        vertical-align: top;
+        padding: 3px 7px 2px 7px;
+    }
+    .html-content th {
+        padding-top: 5px;
+        padding-bottom: 4px;
+        background: silver;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="heading">
+    <h1>rc car</h1>
+  </div>
+  <div id="reqviewTable">
+    <table id="reqsTable" class="table">
+      <!-- Heading of the requirements table -->
+      <thead>
+        <tr>
+          <th class="id-col"><i class="fa fa-asterisk"></i> ID</th>
+          <th class="description-col"><i class="fa fa-align-left"></i> Description</th>
+          <th class="discussion-col"><i class="fa fa-comments-o"></i> Discussion</th>
+          <th class="links-col"><i class="fa fa-link"></i> Links</th>
+          <th class="status-col"><i class="fa fa-tag"></i> </th>
+        </tr>
+      </thead>
+
+      <!-- Requirements table with list of requirements -->
+      <tbody>
+        <tr >
+          <td class="id-col"><a id="1"></a>1 </td>
+          <td class="description-col" style="padding-left:10px">
+            <h1>1 General Requirements</h1>
+            <div class="html-content"><p>Requirments describing the Robot</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="21"></a>21 </td>
+          <td class="description-col" style="padding-left:20px">
+            <h2>1.1 System Requirements</h2>
+            <div class="html-content"><p>Required features of the Robot</p></div>
+          </td>
+          <td class="discussion-col">
+              <div class="comment">
+                <div class="comment-header"><i class="fa fa-comment"></i> 2015-06-25: </div>
+                <div class="html-content comment-text"><p>123</p></div>
+              </div>
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="17"></a>17 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.1.1 Movement</h3>
+            <div class="html-content"><p>-&nbsp;Customer will provide chassis for the robot</p><p>- Forward</p><p>- Backward</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="24"></a>24 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.1.1.1 Speed</h4>
+            <div class="html-content"><p>&nbsp; The speed of the engines will be variable starting from 0%, until 100%</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="25"></a>25 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.1.1.1.1 Acceleration</h5>
+            <div class="html-content"><p>- incrementing&nbsp;1% in every&nbsp;100 milliseconds, the duty cycle will increase his value until&nbsp;100%</p></div>
+          </td>
+          <td class="discussion-col">
+              <div class="comment">
+                <div class="comment-header"><i class="fa fa-comment"></i> 2015-06-25: </div>
+                <div class="html-content comment-text"><p>My comment</p></div>
+              </div>
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="26"></a>26 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.1.1.1.2 Break</h5>
+            <div class="html-content"><p>&nbsp; &nbsp;- decrementing 2% in every 100 milliseconds,&nbsp;the duty cycle will decrease his value until 0%</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="27"></a>27 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.1.1.1.3 No command</h5>
+            <div class="html-content"><p>&nbsp; &nbsp;- decrementing 1% in evert 100 milliseconds, the duty cycle will decrease his value until 0%</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="18"></a>18 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.1.2 Direction</h3>
+            <div class="html-content"><p>The robot will have to perform the following movements:<br>- Steering Left<br>- Steering Right</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="28"></a>28 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.1.2.1 Steering Left</h4>
+            <div class="html-content"><p>- while steering&nbsp;left is in action, the speed of the motor should be constant and equal to the current value</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="29"></a>29 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.1.2.2 Steering Right</h4>
+            <div class="html-content"><p>- while steering&nbsp;right&nbsp;is in action, the speed of the motor should be constant and equal to the current value</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="23"></a>23 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.1.3 Interface with ESP8266</h3>
+            <div class="html-content"><p>The command will be sent form a web browser running on a separate Wifi module ESP8266</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="33"></a>33 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.1.3.1 Communication</h4>
+            <div class="html-content"><p>The communication between the 2 modules (ESP8266 and Arduino UNO) will be performed through 4 separate GPIO port, each port corresponding to a direction (UP, DOWN, LEFT, RIGHT)</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="19"></a>19 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.1.4 Signaling</h3>
+            <div class="html-content"><p>The robot will be equipped with 2 flashers on each side</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="30"></a>30 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.1.4.1 Pulse generation</h4>
+            <div class="html-content"><p>- while steering left/right, the left/right signaling should activate, indicating the direction of the new path</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="31"></a>31 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.1.4.2 Rhytm</h4>
+            <div class="html-content"><p>- 340 milliseconds on</p><p>- 420 milliseconds off</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="20"></a>20 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.1.5 Lighting</h3>
+            <div class="html-content"><p>The robot will be equipped with 2 LED lights that will be turned</p><p>on when the light sensors status indicates DARK, will be switched</p><p>off in case the light sensors indicate LIGHT</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="32"></a>32 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.1.5.1 Light sensors</h4>
+            <div class="html-content"><p>- the&nbsp;robot will have a light&nbsp;sensor which will&nbsp;convert the light levels&nbsp;to a voltage&nbsp;with a range of&nbsp;0-5 volts</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="14"></a>14 </td>
+          <td class="description-col" style="padding-left:20px">
+            <h2>1.2 Software Requirements</h2>
+            <div class="html-content"><p>Requirments related to software design and implementation</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="54"></a>54 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.2.1 Hardware Abstraction Layer</h3>
+            <div class="html-content"><p>- will give the input/output functions to aplication</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="56"></a>56 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.2.1.1 Inputs</h4>
+            <div class="html-content"></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="59"></a>59 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.1.1 SIA_LightSensor</h5>
+            <div class="html-content"><p>- range: 0 - 1023&nbsp;</p><p>- default value: 1023</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="60"></a>60 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.1.2 SID_WifiControlUp</h5>
+            <div class="html-content"><p>- range: 0 - 1</p><p>- default value: 0</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="61"></a>61 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.1.3 SID_WifiControlDown</h5>
+            <div class="html-content"><p>- range: 0 - 1</p><p>- default value: 0</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="62"></a>62 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.1.4 SID_WifiControlRight</h5>
+            <div class="html-content"><p>- range: 0 - 1</p><p>- default value: 0</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="63"></a>63 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.1.5 SID_WifiControlLeft</h5>
+            <div class="html-content"><p>- range: 0 - 1</p><p>- default value: 0</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="57"></a>57 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.2.1.2 Outputs</h4>
+            <div class="html-content"></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="64"></a>64 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.2.1 SOD_Motor12_0</h5>
+            <div class="html-content"><p>- range : 0 - 1</p><p>- default value: 0&nbsp;</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="65"></a>65 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.2.2 SOD_Motor12_1</h5>
+            <div class="html-content"><p>- range : 0 - 1</p><p>- default value: 0&nbsp;</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="66"></a>66 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.2.3 SOD_Motor12_2</h5>
+            <div class="html-content"><p>- range : 0 - 1</p><p>- default value: 0&nbsp;</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="67"></a>67 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.2.4 SOD_Motor12_3</h5>
+            <div class="html-content"><p>- range : 0 - 1</p><p>- default value: 0&nbsp;</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="68"></a>68 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.2.5 SODPWM_EnableMotor1</h5>
+            <div class="html-content"><p>- range : 0 - 100 &nbsp;(%)&nbsp;</p><p>- default value: 0&nbsp;</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="69"></a>69 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.2.6 SODPWM_EnableMotor2</h5>
+            <div class="html-content"><p>- range : 0 - 100 &nbsp;(%)&nbsp;</p><p>- default value: 0&nbsp;</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="70"></a>70 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.2.7 SOD_LeftFlasher</h5>
+            <div class="html-content"><p>-range: 0 - 1</p><p>-default value : 0</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="71"></a>71 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.2.8 SOD_RightFlasher</h5>
+            <div class="html-content"><p>-range: 0 - 1</p><p>-default value : 0</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="72"></a>72 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.2.9 SOD_LowBeam</h5>
+            <div class="html-content"><p>-range: 0 - 1</p><p>-default value: 0</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="58"></a>58 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.2.1.3 Functional requirements</h4>
+            <div class="html-content"></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="92"></a>92 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.3.1 Buffering</h5>
+            <div class="html-content"><p>The inputs and outputs will be placed inside 2 buffers, called inputBuffers and outputBuffers.</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="93"></a>93 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.3.2 Interfaces</h5>
+            <div class="html-content"><p>2 Interfaces shall be implemented between the APP &lt;-&gt; HAL:</p><p>- A get() interface, which will be used to return the value of a logical pin (as described in chapter 1.2.1.1) </p><p>- A set() interface, which will be used to set a request from the APP layer towards the HAL layer to update the physical output corresponding to  the logical port, as described in chapter 1.2.1.2.</p><p> </p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="80"></a>80 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.2.1.4 Hardware Abstraction Layer</h4>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/80_1_hal.PNG"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">80_1_hal.PNG</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="81"></a>81 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.4.1 Inputs</h5>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/81_1_input.PNG"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">81_1_input.PNG</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="82"></a>82 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.2.1.4.2 Outputs</h5>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/82_1_output.PNG"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">82_1_output.PNG</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="76"></a>76 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.2.2 Hardware Software Interface</h3>
+            <div class="html-content"></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="77"></a>77 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.2.2.1 Inputs</h4>
+            <div class="html-content"><ul><li>SIA_Light Sensor &nbsp; &nbsp; – Arduino.A0</li><li>SID_WifiControlUp &nbsp; –&nbsp;Arduino.D7</li><li>SID_WifiControlDown – Arduino.D8</li><li>SID_WifiControlLeft &nbsp;– Arduino.D12</li><li>SID_WifiControlRight –Arduino.D13</li></ul></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="78"></a>78 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.2.2.2 Outputs</h4>
+            <div class="html-content"><ul><li>SOD_Motor12_0 – Arduino.D10</li><li>SOD_Motor12_1 – Arduino.D9</li><li>SOD_Motor12_2 – Arduino.D5</li><li>SOD_Motor12_3&nbsp;– Arduino.D4</li><li><p>SODPWM_EnableMotor1 – Arduino.D11 PWM</p></li><li><p>SODPWM_EnableMotor2 – Arduino.D3 PWM</p></li><li><p>SOD_LeftFlasher – Arduino.A2 ( must be set a digital pin)</p></li><li><p>SOD_RightFlasher – Arduino.A1 ( must be set a digital pin)</p></li><li><p>SOD_LowBeam – Arduino.D6</p></li></ul></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="55"></a>55 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.2.3 Application Software</h3>
+            <div class="html-content"></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="11"></a>11 </td>
+          <td class="description-col" style="padding-left:20px">
+            <h2>1.3 Hardware Requirements</h2>
+            <div class="html-content"><p>All requirments related to:</p><p>- hardware schematic</p><p>- wiring</p><p>- PCB design</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="36"></a>36 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.3.1 Hardware Schematic</h3>
+            <div class="html-content"></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="37"></a>37 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.3.2 Wiring</h3>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/37_1_wiring.png"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">37_1_wiring.png</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="38"></a>38 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.3.3 PCB Design</h3>
+            <div class="html-content"></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="39"></a>39 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.3.4 Modules</h3>
+            <div class="html-content"><p>Informations regarding the modules used in project:</p><p>- DC - DC Module</p><p>- Arduino Module</p><p>-&nbsp;ESP8266 Wi Fi module</p><p>- Hbridge Module</p><p>- Light Module</p><p>&nbsp;&nbsp;</p><p><br></p><p><br></p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="40"></a>40 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.3.4.1 DC - DC Module</h4>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/40_1_dc-dc.jpg"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">40_1_dc-dc.jpg</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="41"></a>41 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.3.4.1.1 Inputs</h5>
+            <div class="html-content"><ul><li>RED WIRE – The positive wire of the power supply</li><li>BLACK WIRE – The ground wire of the power supply</li></ul></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="43"></a>43 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.3.4.1.2 Outputs</h5>
+            <div class="html-content"><ul><li>RED WIRE – The positive wire for the 12V power circuit</li><li>BLACK WIRE – The ground wire for the 12V power circuit</li></ul></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="44"></a>44 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.3.4.2 Arduino Uno Module</h4>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/44_1_arduino.jpg"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">44_1_arduino.jpg</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="45"></a>45 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.3.4.2.1 Inputs</h5>
+            <div class="html-content"><ul><li>A0 – the value of the light sensor</li><li>D7 – connects the GPIO13 pin of the Wi Fi module to the Arduino (Future Up button)</li><li>D8 – connects the GPIO12 pin of the Wi Fi module to the Arduino (Future Down button)</li><li>D12– connects the GPIO4 pin of the Wi Fi module to the Arduino (Future Left button)</li><li>D13– connects the GPIO5 pin of the Wi Fi module to the Arduino (Future Right button)&nbsp;</li></ul><p>The power needed for powering the module will be provided from the DC – DC module output</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="46"></a>46 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.3.4.2.2 Outputs</h5>
+            <div class="html-content"><ul><li>5V – power for the Wi – Fi Conversion module which will privide 3.3V for the pins: VCC, CH_PD and GPIO2</li><li>GND – ground reference for the Wi – Fi module pins: GPIO0, GPIO15 and GND</li><li>Analog pin 1 – connects with the RY pin on the Light Module,but it has to be set as a DIGITAL PIN</li><li>Analog pin 2 – connects with the LY pin on the Light Module,but it has to be set as a DIGITAL PIN</li><li>Digital pin 2 – connects with the R pin on the Light Module</li><li>Digital pin 3 – connects with the ENB pin on the Hbridge Module, this pin needs to be a PWM pin.</li><li>Digital pin 4 – connects with the Hbridge pin IN4, is not necessarly to be a pwm pin.</li><li>Digital pin 5 – connects with the Hbridge pin IN3, is not necessarly to be a pwm pin.</li><li>Digital pin 6 – connects with the W pin on the Light Module</li><li>Digital pin 9 – connects with the Hbridge pin IN2, is not necessarly to be a pwm pin.</li><li>Digital pin 10 – connects with the Hbridge pin IN1, is not necessarly to be a pwm pin.</li><li>Digital pin 11 – connects with the ENA pin on the Hbridge Module, this pin needs to be a PWM pin.</li></ul></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="47"></a>47 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.3.4.3 ESP8266 WiFi module </h4>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/47_1_wifi.jpg"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">47_1_wifi.jpg</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="48"></a>48 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.3.4.3.1 Inputs</h5>
+            <div class="html-content"><ul><li>CH_PD – connects with the 3.3v pin on the Conversion Module</li><li>VCC – connects with the 3.3v pin on the Conversion Module</li><li>GPIO2 – connects with the 3.3v pin on the Conversion Module&nbsp;</li><li>GPIO0 – connects with the GND pin on the Arduino Module</li><li>GPIO15 – connects with the GND pin on the Arduino Module</li><li>GND – connects with the GND pin on the Arduino Module&nbsp;</li></ul></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="49"></a>49 </td>
+          <td class="description-col" style="padding-left:60px">
+            <h6>1.3.4.3.1.1 Outputs</h6>
+            <div class="html-content"><ul><li>GPIO4 – connects with the arduino module on digital pin 12 (Future Left )</li><li>GPIO5 – connects with the arduino module on digital pin 13 (Future Right)</li><li>GPIO12 – connects with the arduino module on digital pin 8 (Future Down)</li><li>GPIO13 – connects with the arduino module on digital pin 7 (Future Up)</li></ul></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="50"></a>50 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.3.4.4 Hbridge Module </h4>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/50_1_hbridge.jpg"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">50_1_hbridge.jpg</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="51"></a>51 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.3.4.4.1 Inputs</h5>
+            <div class="html-content"><ul><li>+12 V – the external power supply positive wire will be connected to this pin</li><li>GND – the external power supply negative wire will be connected to this pin</li><li>ENA – connects with the D11 pin on the Arduino module, this input needs to be a PWM signal.</li><li>IN1 – connects with the D10 pin on the Arduino module, not necessarly to be a PWM pin.</li><li>IN2 – connects with the D9 pin on the Arduino module, not necessarly to be a PWM pin.</li><li>IN3 – connects with the D5 pin on the Arduino module, not necessarly to be a PWM pin.</li><li>IN4 – connects with the D4 pin on the Arduino module, not necessarly to be a PWM pin.</li><li>ENB – connects with the D3 pin on the Arduino module, this input needs to be a PWM signal.</li></ul></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="53"></a>53 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.3.4.4.2 Outputs</h5>
+            <div class="html-content"><ul><li>OUT1 – connects the first wire of the first DC motor.</li><li>OUT2 – connects the second wire of the first DC motor.</li><li>OUT3 – connects the first wire of the second DC motor.</li><li>OUT4 – connects the second wire of the second DC motor</li></ul></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="73"></a>73 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.3.4.5 Light Module</h4>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/73_1_lightModule.png"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">73_1_lightModule.png</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="74"></a>74 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.3.4.5.1 Inputs</h5>
+            <div class="html-content"><ul><li>+5V – the 5V wire will be connected to this pin</li><li>GND – the GND wire will be connected to this pin</li><li>Sensor in – this pins will be connected to the actual sensor</li><li>W – this pin controls the Low Beam output</li><li>R - this pin controls the Stop output</li><li>LY - this pin controls the Left Signaling output</li><li>RY - this pin controls the Right Signaling output</li></ul></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="75"></a>75 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.3.4.5.2 Outputs</h5>
+            <div class="html-content"><ul><li>W – this pin controls the Low Beam LEDS</li><li>R - this pin controls the Stop LEDS</li><li>LY - this pin controls the Left Signaling LEDS</li><li>RY - this pin controls the Right Signaling LEDS</li></ul></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="13"></a>13 </td>
+          <td class="description-col" style="padding-left:20px">
+            <h2>1.4 Mechanical Design</h2>
+            <div class="html-content"><p>Mechanical aspects</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="83"></a>83 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.4.1 Module distribution</h3>
+            <div class="html-content"></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="85"></a>85 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.4.1.1 Top of the board</h4>
+            <div class="html-content"><p>Above the board are displayed three modules&nbsp;</p><p>- H bridge</p><p>- Arduino Uno</p><p>- Wifi Module</p></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/85_1_top.png"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">85_1_top.png</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="87"></a>87 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.4.1.1.1 HBridge Module</h5>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/87_1_hbridgesize.png"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">87_1_hbridgesize.png</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="88"></a>88 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.4.1.1.2 Arduino Uno</h5>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/88_1_arduinosize.png"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">88_1_arduinosize.png</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="89"></a>89 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.4.1.1.3 WiFi Module</h5>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/89_1_wifiModule.png"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">89_1_wifiModule.png</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="86"></a>86 </td>
+          <td class="description-col" style="padding-left:40px">
+            <h4>1.4.1.2 Bottom of the board</h4>
+            <div class="html-content"><p>Underneath&nbsp;the board are displayed two modules&nbsp;</p><p>- Light Module</p><p>- Boost Power Supply Converter Module</p></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/86_1_bottom.png"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">86_1_bottom.png</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="90"></a>90 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.4.1.2.1 Boost Power Supply Converter Module</h5>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/90_1_smpssize.png"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">90_1_smpssize.png</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="91"></a>91 </td>
+          <td class="description-col" style="padding-left:50px">
+            <h5>1.4.1.2.2 Light Detector</h5>
+            <div class="html-content"></div>
+              <div class="attachment">
+                  <img class="img-responsive" src="RC_files/91_1_lightDetectorsize.png"></br>
+                  <i class="fa fa-image"></i> <span class="attachment-name">91_1_lightDetectorsize.png</span>
+              </div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="84"></a>84 </td>
+          <td class="description-col" style="padding-left:30px">
+            <h3>1.4.2 Bill of Materials</h3>
+            <div class="html-content"><p>-&nbsp;<a data-cke-saved-href="https://webmail.arobs.com/owa/redir.aspx?SURL=v-r70gI52qf8JEtO0uzGzSMpZYbaZFeKI4aJT8Ybri0hBxfL3XrSCGgAdAB0AHAAOgAvAC8AdwB3AHcALgBjAG8AbgByAGEAZAAuAGQAZQAvAGMAZQAvAGQAZQAvAHAAcgBvAGQAdQBjAHQALwAxADkAMQAxADUAMgAvAEEAcgBlAHgAeAAtAEYAYQBoAHIAZwBlAHMAdABlAGwAbAAtAFIAbwBiAGIAeQAtAFIAUAA1AFIAUAA2AC0AUgBvAGIAbwB0AGUAcgA.&amp;URL=http%3a%2f%2fwww.conrad.de%2fce%2fde%2fproduct%2f191152%2fArexx-Fahrgestell-Robby-RP5RP6-Roboter" href="https://webmail.arobs.com/owa/redir.aspx?SURL=v-r70gI52qf8JEtO0uzGzSMpZYbaZFeKI4aJT8Ybri0hBxfL3XrSCGgAdAB0AHAAOgAvAC8AdwB3AHcALgBjAG8AbgByAGEAZAAuAGQAZQAvAGMAZQAvAGQAZQAvAHAAcgBvAGQAdQBjAHQALwAxADkAMQAxADUAMgAvAEEAcgBlAHgAeAAtAEYAYQBoAHIAZwBlAHMAdABlAGwAbAAtAFIAbwBiAGIAeQAtAFIAUAA1AFIAUAA2AC0AUgBvAGIAbwB0AGUAcgA.&amp;URL=http%3a%2f%2fwww.conrad.de%2fce%2fde%2fproduct%2f191152%2fArexx-Fahrgestell-Robby-RP5RP6-Roboter">RP5RP6-Roboter</a>&nbsp;chasis</p><p>- Arduino Uno Board</p><p>- WiFi Module ESP8266</p><p>- Power Supply Converter</p><p>- Dual H bridge</p><p>- 30 bold nut (3mm)</p><p>- 15 screw bolt (3mm)</p><p>- 4 pedestals for &nbsp;LEDs&nbsp;</p><p>- 2 white LEDs</p><p>- 2 red LEDs</p><p>- 4 Orange LEDs</p><p><br></p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="9"></a>9 </td>
+          <td class="description-col" style="padding-left:10px">
+            <h1>2 Test Cases</h1>
+            <div class="html-content"></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="10"></a>10 </td>
+          <td class="description-col" style="padding-left:20px">
+            <h2>2.1 Inputs</h2>
+            <div class="html-content"></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+        <tr >
+          <td class="id-col"><a id="34"></a>34 </td>
+          <td class="description-col" style="padding-left:20px">
+            <h2>2.2 Expected Values</h2>
+            <div class="html-content"><p>Test Output</p><p>Test inputs</p></div>
+          </td>
+          <td class="discussion-col">
+          </td>
+          <td class="links-col">
+          </td>
+          <td class="status-col"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="footer">
+      <hr>
+      <div class="pull-right"><em>Last modified by <a href="mailto://barna.peto@arobs.com">Barna Peto, Arobs</a> on 2015-07-14 12:05</em></div>
+    </div>
+  </div>
+</body>
