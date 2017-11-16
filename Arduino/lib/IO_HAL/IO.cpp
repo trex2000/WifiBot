@@ -36,7 +36,7 @@
 
 
 #define CHECK_BIT(var,pos) ((var) & (1<<(pos))) //macro care verifica o pozitie din registru daca e pe 1 logic
-#define MAX_PWM_VALUE_REG 256
+#define MAX_PWM_VALUE_REG 255
 
 
 
