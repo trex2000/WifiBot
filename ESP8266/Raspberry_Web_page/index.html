@@ -1,0 +1,126 @@
+<html><head>
+  <title>Robot Control</title>
+  <style>
+  #log {
+    position: absolute;
+    left: 300px;
+    top: 50px;
+  	width:600px;
+  	height:300px;
+  	border:1px solid #7F9DB9;
+  	overflow:auto;
+  }
+  #btnUp {
+      position: absolute;
+      left: 100px;
+      top: 150px;
+      width: 100px;
+      text-align:center;
+  }
+  #btnDown {
+      position: absolute;
+      left: 100px;
+      top: 250px;
+      width: 100px;
+      text-align:center;
+  }
+  #btnLeft {
+      position: absolute;
+      left: 50px;
+      top: 200px;
+      width: 100px;
+      text-align:center;
+  }
+  #btnRight {
+      position: absolute;
+      left: 150px;
+      top: 200px;
+      width: 100px;
+      text-align:center;
+  }
+  </style>
+<script type="text/javascript">
+var socket;
+
+function init() {
+	var host = "ws://192.168.200.124:9000/"; // SET THIS TO YOUR SERVER
+	try {
+		socket = new WebSocket(host);
+		log('WebSocket - status '+socket.readyState);
+		socket.onopen    = function(msg) {
+							   log("Welcome - status "+this.readyState);
+						   };
+		socket.onmessage = function(msg) {
+							   log("Received: "+msg.data);
+						   };
+		socket.onclose   = function(msg) {
+							   log("Disconnected - status "+this.readyState);
+						   };
+	}
+	catch(ex){
+		log(ex);
+	}
+	$("msg").focus();
+}
+
+function send(){
+	var txt,msg;
+	txt = $("msg");
+	msg = txt.value;
+	if(!msg) {
+		alert("Message can not be empty");
+		return;
+	}
+	txt.value="";
+	txt.focus();
+	try {
+		socket.send(msg);
+	} catch(ex) {
+		log(ex);
+	}
+}
+function quit(){
+	if (socket != null) {
+		log("Goodbye!");
+		socket.close();
+		socket=null;
+	}
+}
+
+function GPIO_ON(id){
+	try {
+		socket.send("GPIO" + id + "ON");
+	} catch(ex) {
+		log(ex);
+	}
+}
+
+function GPIO_OFF(id){
+	try {
+    socket.send("GPIO" + id + "OFF");
+	} catch(ex) {
+		log(ex);
+	}
+}
+
+function reconnect() {
+	quit();
+	init();
+}
+
+// Utilities
+function $(id){ return document.getElementById(id); }
+function log(msg){ $("log").innerHTML+="<br>"+msg; }
+function onkey(event){ if(event.keyCode==13){ send(); } }
+</script>
+
+</head>
+<body onload="init()">
+  <h1>Robot Control</h1>
+          <div id="log"></div>
+          <input type="button" id="btnUp" value="Up" onmousedown="GPIO_ON(17)" onmouseup="GPIO_OFF(17)" />
+          <input type="button" id="btnDown" value="Down" onmousedown="GPIO_ON(4)" onmouseup="GPIO_OFF(4)"/>
+          <input type="button" id="btnLeft" value="Left" onmousedown="GPIO_ON(27)" onmouseup="GPIO_OFF(27)"/>
+          <input type="button" id="btnRight" value="Right" onmousedown="GPIO_ON(22)" onmouseup="GPIO_OFF(22)"/>
+</body>
+</html>

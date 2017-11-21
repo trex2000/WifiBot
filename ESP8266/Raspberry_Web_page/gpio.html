@@ -1,0 +1,54 @@
+                                                                                                                                     [*][X]
+<html>
+<head>
+<meta name="viewport" content="width=device-width" />
+<title>Robot Control</title>
+<style>
+#btnUp {
+    position: absolute;
+    left: 100px;
+    top: 150px;
+    width: 100px;
+    text-align:center;
+}
+#btnDown {
+    position: absolute;
+    left: 100px;
+    top: 250px;
+    width: 100px;
+    text-align:center;
+}
+#btnLeft {
+    position: absolute;
+    left: 50px;
+    top: 200px;
+    width: 100px;
+    text-align:center;
+}
+#btnRight {
+    position: absolute;
+    left: 150px;
+    top: 200px;
+    width: 100px;
+    text-align:center;
+}
+</style>
+<script>
+  var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+  var LED = new Gpio(17, 'out'); //use GPIO pin 4, and specify that it is output
+  function LedON(){
+    LED.writeSync(1);
+    alert("Hello World");
+  }
+</script>
+</head>
+       <body>
+       <h1>Robot Control</h1>
+               <input type="button" id="btnUp" value="Up" onmousedown="LedON()" onmouseup="getElementById('text').innerHTML = 'release';">
+               <p id="text">
+               <input type="button" id="btnDown" value="Down" />
+               <input type="button" id="btnLeft" value="Left" />
+               <input type="button" id="btnRight" value="Right"/>
+       </form>
+       </body>
+</html>
