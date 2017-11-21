@@ -126,7 +126,7 @@ void lowBeamCyclic()
 
 void lowBeamInputsAQ()
 {
-
+	//Serial.println(GetInputPin(EN_SIA_LIGHTSENSOR));
 	if (GetInputPin(EN_SIA_LIGHTSENSOR) <= LIGHT_SENSOR_VALUE_WHEN_DARK)
 	{
 		lbReqStates_en = EN_LB_REQ_STATE_ON;
