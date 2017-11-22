@@ -45,11 +45,27 @@ typedef enum en_movement_states {
 	EN_STATE_ACCELERATION ,				/**< Acceleration */
 	EN_STATE_DECELERATION ,				/**< Breaking */
 	EN_STATE_STEERING_LEFT ,			/**< ST Left*/
+	EN_STATE_BREAK_LEFT ,			/**< B Left*/
 	EN_STATE_STEERING_RIGHT,			/**< ST Right*/
+	EN_STATE_BREAK_RIGHT,			/**< B Right*/
 	EN_STATE_IDLE ,						/**< Idle */
 	EN_NUMBER_OF_ELEMENTS_STATES ,      /**< Number of states*/
 } EN_MOVEMENT_STATES;
 
+/**
+ * @brief Enumeration of requests movement states
+ *
+ * Enumeration of requests movement states.
+ */
+typedef enum en_movement_request_states {
+	EN_STATE_REQ_ACCELERATION ,				/**< Acceleration */
+	EN_STATE_REQ_DECELERATION ,				/**< Breaking */
+	EN_STATE_REQ_STEERING_LEFT ,			/**< ST Left*/
+	EN_STATE_REQ_STEERING_RIGHT,			/**< ST Right*/
+	EN_STATE_REQ_IDLE ,						/**< Idle */
+	EN_STATE_REQ_ERROR ,						/**< Idle */
+	EN_NUMBER_OF_REQ_ELEMENTS_STATES ,      /**< Number of states*/
+} EN_MOVEMENT_REQUEST_STATES;
 
 /**
  * @brief union of flags
@@ -69,7 +85,15 @@ uint8_t motorSpeed_u8;
  *
  *  enum of states
  */
-EN_MOVEMENT_STATES motorStates_en;
+EN_MOVEMENT_STATES motorStates_en = EN_STATE_IDLE;
+
+/**
+ * @brief enum of requests states
+ *
+ *  enum of requests states
+ */
+EN_MOVEMENT_REQUEST_STATES motorReqStates_en;
+
 
 #define FLAG_DIRECTION_UP flags8_motors_u.bits.b0
 #define FLAG_DIRECTION_DOWN flags8_motors_u.bits.b1
@@ -79,6 +103,14 @@ EN_MOVEMENT_STATES motorStates_en;
 #define FLAG_STEERING_RIGHT_ACTIVE flags8_motors_u.bits.b5
 #define UNUSED6 flags8_motors_u.bits.b6
 #define UNUSED7 flags8_motors_u.bits.b7
+
+/**
+ * @brief maximum engine duty cycle
+ *
+ * maximum engine duty cycle
+ */
+#define MOTOR_DIRECTION_CHANGE_DELAY (120u/40u)
+
 
 /**
  * @brief maximum engine duty cycle
@@ -99,7 +131,7 @@ EN_MOVEMENT_STATES motorStates_en;
  *
  *engine deceleration step
  */
-#define MOTOR_SPEED_STEP_DOWN 2u
+#define MOTOR_SPEED_STEP_DOWN 8u
 
 /**
  * @brief engine deceleration step while no one of the input button is puhsed
@@ -116,6 +148,12 @@ EN_MOVEMENT_STATES motorStates_en;
 #define MOTOR_MIN_SPEED 20u
 
 /**
+ * @brief engine steering speed
+ *
+ *engine steering speed
+ */
+#define MOTOR_STEERING_SPEED 20u
+/**
 * @brief Implementation of function that handles the initialization of motor control
 *
 * mplementation of function that handles the initialization of motor control
@@ -124,12 +162,9 @@ EN_MOVEMENT_STATES motorStates_en;
 */
 void motorsInit()
 {
-
 	motorStates_en=EN_STATE_IDLE;
 	flags8_motors_u.byte=0;
 	motorSpeed_u8=0;
-
-
 }
 
 
@@ -159,82 +194,42 @@ void motorsCyclic()
 void motorsInputsAQ()
 {
 
-	if(GetInputPin(EN_SID_WIFI_CONTROL_UP)){
-		FLAG_DIRECTION_UP=1;
-	}
-
-	else{
-		FLAG_DIRECTION_UP=0;
-	}
-
-
-	if(GetInputPin(EN_SID_WIFI_CONTROL_DOWN)){
-		FLAG_DIRECTION_DOWN=1;
-	}
-
-	else{
-		FLAG_DIRECTION_DOWN=0;
-	}
-
-	if(GetInputPin(EN_SID_WIFI_CONTROL_LEFT)){
-		FLAG_DIRECTION_LEFT=1;
-	}
-
-	else{
-		FLAG_DIRECTION_LEFT=0;
-	}
-
-	if(GetInputPin(EN_SID_WIFI_CONTROL_RIGHT)){
-		FLAG_DIRECTION_RIGHT=1;
-	}
-
-	else{
-		FLAG_DIRECTION_RIGHT=0;
-	}
-
-//	FLAG_DIRECTION_UP=GetInputPin(EN_SID_WIFI_CONTROL_UP);
-//	FLAG_DIRECTION_DOWN=GetInputPin(EN_SID_WIFI_CONTROL_DOWN);
-//	FLAG_DIRECTION_LEFT=GetInputPin(EN_SID_WIFI_CONTROL_LEFT);
-//	FLAG_DIRECTION_RIGHT=GetInputPin(EN_SID_WIFI_CONTROL_RIGHT);
-
-	if (FLAG_DIRECTION_LEFT)
+	if(GetInputPin(EN_SID_WIFI_CONTROL_UP))
 	{
-		if(FLAG_DIRECTION_RIGHT)
-		{
-			//keep last state
-		}
-		else
-		{
-			motorStates_en=EN_STATE_STEERING_LEFT;
-		}
+		motorReqStates_en=EN_STATE_REQ_ACCELERATION;
 	}
 	else
 	{
-		if (FLAG_DIRECTION_RIGHT)
+		if(GetInputPin(EN_SID_WIFI_CONTROL_LEFT))
 		{
-			motorStates_en=EN_STATE_STEERING_RIGHT;
+			motorReqStates_en=EN_STATE_REQ_STEERING_LEFT;
 		}
 		else
 		{
-			if (FLAG_DIRECTION_DOWN)
+			if(GetInputPin(EN_SID_WIFI_CONTROL_RIGHT))
 			{
-				motorStates_en=EN_STATE_DECELERATION;
+				motorReqStates_en=EN_STATE_REQ_STEERING_RIGHT;
 			}
 			else
 			{
-				if (FLAG_DIRECTION_UP)
+				if(GetInputPin(EN_SID_WIFI_CONTROL_DOWN))
 				{
-					motorStates_en=EN_STATE_ACCELERATION;
+					motorReqStates_en=EN_STATE_REQ_DECELERATION;
 				}
 				else
 				{
-					motorStates_en=EN_STATE_IDLE;
+					if(!GetInputPin(EN_SID_WIFI_CONTROL_UP) && !GetInputPin(EN_SID_WIFI_CONTROL_LEFT) && !GetInputPin(EN_SID_WIFI_CONTROL_RIGHT) && !GetInputPin(EN_SID_WIFI_CONTROL_DOWN))
+					{
+						motorReqStates_en=EN_STATE_REQ_IDLE;
+					}
+					else
+					{
+						motorReqStates_en=EN_STATE_REQ_ERROR;
+					}
 				}
 			}
 		}
 	}
-
-
 
 }
 
@@ -252,74 +247,138 @@ void motorsSM()
 	switch(motorStates_en)
 	{
 		case EN_STATE_ACCELERATION:
-			if ((motorSpeed_u8+MOTOR_SPEED_STEP_UP)<=MAX_MOTOR_SPEED)
-			{
-				if(motorSpeed_u8 < MOTOR_MIN_SPEED)
-				{
-					motorSpeed_u8 = MOTOR_MIN_SPEED;
-				}
-				else
-				{
-					motorSpeed_u8+=MOTOR_SPEED_STEP_UP;
-				}
-			}
-			else
-			{
-				motorSpeed_u8=MAX_MOTOR_SPEED;
-			}
-		break;
 		case EN_STATE_DECELERATION:
-			if ((motorSpeed_u8-MOTOR_SPEED_STEP_DOWN)>=0)
-			{
-				if (motorSpeed_u8 <= MOTOR_MIN_SPEED)
-				{
-					motorSpeed_u8 = 0;
-				}
-				else
-				{
-					motorSpeed_u8-=MOTOR_SPEED_STEP_DOWN;
-				}
-			}
-			else
-			{
-				motorSpeed_u8=0;
+		case EN_STATE_IDLE:
+			switch (motorReqStates_en) {
+				case EN_STATE_REQ_ACCELERATION:
+					motorStates_en = EN_STATE_ACCELERATION;
+				break;
+				case EN_STATE_REQ_DECELERATION:
+					motorStates_en = EN_STATE_DECELERATION;
+				break;
+				case EN_STATE_REQ_STEERING_LEFT:
+					motorStates_en = EN_STATE_BREAK_LEFT;
+				break;
+				case EN_STATE_REQ_STEERING_RIGHT:
+					motorStates_en = EN_STATE_BREAK_RIGHT;
+				break;
+				case EN_STATE_REQ_IDLE:
+				case EN_STATE_REQ_ERROR:
+					motorStates_en = EN_STATE_IDLE;
+				break;
+				default:
+				break;
 			}
 		break;
 		case EN_STATE_STEERING_LEFT:
-				FLAG_STEERING_LEFT_ACTIVE=1;
-				FLAG_STEERING_RIGHT_ACTIVE=0;
+		case EN_STATE_BREAK_LEFT:
+			switch (motorReqStates_en) {
+				case EN_STATE_REQ_ACCELERATION:
+					motorStates_en = EN_STATE_ACCELERATION;
+				break;
+				case EN_STATE_REQ_DECELERATION:
+					motorStates_en = EN_STATE_DECELERATION;
+				break;
+				case EN_STATE_REQ_STEERING_LEFT:
+					motorStates_en = EN_STATE_STEERING_LEFT;
+				break;
+				case EN_STATE_REQ_STEERING_RIGHT:
+					motorStates_en = EN_STATE_BREAK_RIGHT;
+				break;
+				case EN_STATE_REQ_IDLE:
+				case EN_STATE_REQ_ERROR:
+					motorStates_en = EN_STATE_IDLE;
+				break;
+				default:
+				break;
+			}
 		break;
 		case EN_STATE_STEERING_RIGHT:
-				FLAG_STEERING_LEFT_ACTIVE=0;
-				FLAG_STEERING_RIGHT_ACTIVE=1;
-		break;
-		case EN_STATE_IDLE:
-		if ((motorSpeed_u8-MOTOR_SPEED_STEP_DOWN_IDLE)>=0)
-		{
-			if (motorSpeed_u8 <= MOTOR_MIN_SPEED)
-			{
-				motorSpeed_u8 = 0;
+		case EN_STATE_BREAK_RIGHT:
+			switch (motorReqStates_en) {
+				case EN_STATE_REQ_ACCELERATION:
+					motorStates_en = EN_STATE_ACCELERATION;
+				break;
+				case EN_STATE_REQ_DECELERATION:
+					motorStates_en = EN_STATE_DECELERATION;
+				break;
+				case EN_STATE_REQ_STEERING_LEFT:
+					motorStates_en = EN_STATE_BREAK_LEFT;
+				break;
+				case EN_STATE_REQ_STEERING_RIGHT:
+					motorStates_en = EN_STATE_STEERING_RIGHT;
+				break;
+				case EN_STATE_REQ_IDLE:
+				case EN_STATE_REQ_ERROR:
+					motorStates_en = EN_STATE_IDLE;
+				break;
+				default:
+				break;
 			}
-			else
-			{
-				motorSpeed_u8-=MOTOR_SPEED_STEP_DOWN;
-			}
-		}
-		else
-		{
-			motorSpeed_u8=0;
-		}
-		FLAG_STEERING_LEFT_ACTIVE=0;
-		FLAG_STEERING_RIGHT_ACTIVE=0;
 		break;
 		default:
-				FLAG_STEERING_LEFT_ACTIVE=0;
-				FLAG_STEERING_RIGHT_ACTIVE=0;
 		break;
 	}
 
-
-
+	switch(motorStates_en)
+	{
+		case EN_STATE_ACCELERATION:
+			if ((motorSpeed_u8+MOTOR_SPEED_STEP_UP)<=MAX_MOTOR_SPEED)
+				{
+					if(motorSpeed_u8 < MOTOR_MIN_SPEED)
+					{
+						motorSpeed_u8 = MOTOR_MIN_SPEED;
+					}
+					else
+					{
+						motorSpeed_u8+=MOTOR_SPEED_STEP_UP;
+					}
+				}
+				else
+				{
+					motorSpeed_u8=MAX_MOTOR_SPEED;
+				}
+		break;
+		case EN_STATE_DECELERATION:
+			if ((motorSpeed_u8-MOTOR_SPEED_STEP_DOWN)>=0)
+				{
+					if (motorSpeed_u8 <= MOTOR_MIN_SPEED)
+					{
+						motorSpeed_u8 = 0;
+					}
+					else
+					{
+						motorSpeed_u8-=MOTOR_SPEED_STEP_DOWN;
+					}
+				}
+				else
+				{
+					motorSpeed_u8=0;
+				}
+		break;
+		case EN_STATE_IDLE:
+			if ((motorSpeed_u8-MOTOR_SPEED_STEP_DOWN_IDLE)>=0)
+					{
+						if (motorSpeed_u8 <= MOTOR_MIN_SPEED)
+						{
+							motorSpeed_u8 = 0;
+						}
+						else
+						{
+							motorSpeed_u8-=MOTOR_SPEED_STEP_DOWN_IDLE;
+						}
+					}
+					else
+					{
+						motorSpeed_u8=0;
+					}
+		break;
+		case EN_STATE_STEERING_LEFT:
+		case EN_STATE_STEERING_RIGHT:
+			motorSpeed_u8=MOTOR_STEERING_SPEED;
+		default:
+		break;
+	}
 
 }
 
@@ -335,31 +394,43 @@ void motorsSM()
 void motorsActuator()
 {
 
-	if (FLAG_STEERING_LEFT_ACTIVE)
+	switch(motorStates_en)
 	{
-		setOutputPin (EN_SOD_MOTOR12_0, 0);
-		setOutputPin (EN_SOD_MOTOR12_1, 1);
-		setOutputPin (EN_SOD_MOTOR12_2, 1);
-		setOutputPin (EN_SOD_MOTOR12_3, 0);
+		case EN_STATE_ACCELERATION:
+		case EN_STATE_DECELERATION:
+		case EN_STATE_IDLE:
+			setOutputPin (EN_SOD_MOTOR_RIGHT_0, 0);
+			setOutputPin (EN_SOD_MOTOR_RIGHT_1, 1);
+			setOutputPin (EN_SOD_MOTOR_LEFT_0, 0);
+			setOutputPin (EN_SOD_MOTOR_LEFT_1, 1);
+			break;
+		case EN_STATE_STEERING_LEFT:
+			setOutputPin (EN_SOD_MOTOR_RIGHT_0, 0);
+			setOutputPin (EN_SOD_MOTOR_RIGHT_1, 1);
+			setOutputPin (EN_SOD_MOTOR_LEFT_0, 1);
+			setOutputPin (EN_SOD_MOTOR_LEFT_1, 0);
+			break;
+		case EN_STATE_BREAK_LEFT:
+			setOutputPin (EN_SOD_MOTOR_RIGHT_0, 0);
+			setOutputPin (EN_SOD_MOTOR_RIGHT_1, 1);
+			setOutputPin (EN_SOD_MOTOR_LEFT_0, 1);
+			setOutputPin (EN_SOD_MOTOR_LEFT_1, 1);
+			break;
+		case EN_STATE_STEERING_RIGHT:
+			setOutputPin (EN_SOD_MOTOR_RIGHT_0, 1);
+			setOutputPin (EN_SOD_MOTOR_RIGHT_1, 0);
+			setOutputPin (EN_SOD_MOTOR_LEFT_0, 0);
+			setOutputPin (EN_SOD_MOTOR_LEFT_1, 1);
+			break;
+		case EN_STATE_BREAK_RIGHT:
+			setOutputPin (EN_SOD_MOTOR_RIGHT_0, 1);
+			setOutputPin (EN_SOD_MOTOR_RIGHT_1, 1);
+			setOutputPin (EN_SOD_MOTOR_LEFT_0, 0);
+			setOutputPin (EN_SOD_MOTOR_LEFT_1, 1);
+			break;
+		default:
+		break;
 	}
-	else
-	{
-		if (FLAG_STEERING_RIGHT_ACTIVE)
-		{
-			setOutputPin (EN_SOD_MOTOR12_0, 1);
-			setOutputPin (EN_SOD_MOTOR12_1, 0);
-			setOutputPin (EN_SOD_MOTOR12_2, 0);
-			setOutputPin (EN_SOD_MOTOR12_3, 1);
-		}
-		else
-		{
-			setOutputPin (EN_SOD_MOTOR12_0, 0);
-			setOutputPin (EN_SOD_MOTOR12_1, 1);
-			setOutputPin (EN_SOD_MOTOR12_2, 0);
-			setOutputPin (EN_SOD_MOTOR12_3, 1);
-		}
-	}
-
 
 	if (motorSpeed_u8>0)
 	{
@@ -371,4 +442,5 @@ void motorsActuator()
 		setOutputPin(EN_SODPWM_ENABLE_MOTOR1, 0);
 		setOutputPin(EN_SODPWM_ENABLE_MOTOR2, 0);
 	}
+
 }
