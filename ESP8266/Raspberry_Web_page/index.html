@@ -118,9 +118,9 @@ function onkey(event){ if(event.keyCode==13){ send(); } }
 <body onload="init()">
   <h1>Robot Control</h1>
           <div id="log"></div>
-          <input type="button" id="btnUp" value="Up" onmousedown="GPIO_ON(17)" onmouseup="GPIO_OFF(17)" />
-          <input type="button" id="btnDown" value="Down" onmousedown="GPIO_ON(4)" onmouseup="GPIO_OFF(4)"/>
-          <input type="button" id="btnLeft" value="Left" onmousedown="GPIO_ON(27)" onmouseup="GPIO_OFF(27)"/>
-          <input type="button" id="btnRight" value="Right" onmousedown="GPIO_ON(22)" onmouseup="GPIO_OFF(22)"/>
+          <input type="button" id="btnUp" value="Up" onmousedown="GPIO_ON(17)" onmouseup="GPIO_OFF(17)" ontouchstart="GPIO_ON(17)" ontouchend="GPIO_OFF(17)"/>
+          <input type="button" id="btnDown" value="Down" onmousedown="GPIO_ON(4)" onmouseup="GPIO_OFF(4)" ontouchstart="GPIO_ON(4)" ontouchend="GPIO_OFF(4)"/>
+          <input type="button" id="btnLeft" value="Left" onmousedown="GPIO_ON(27)" onmouseup="GPIO_OFF(27)" ontouchstart="GPIO_ON(27)" ontouchend="GPIO_OFF(27)"/>
+          <input type="button" id="btnRight" value="Right" onmousedown="GPIO_ON(22)" onmouseup="GPIO_OFF(22)" ontouchstart="GPIO_ON(22)" ontouchend="GPIO_OFF(22)"/>
 </body>
 </html>
