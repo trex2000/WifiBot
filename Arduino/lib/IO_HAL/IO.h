@@ -56,10 +56,10 @@ typedef enum en_input_pins {
  * Enumeration of logical outputs.
  */
 typedef enum en_output_pins {
-	EN_SOD_MOTOR12_0,					/**< Motor 12 digital output 1 */
-	EN_SOD_MOTOR12_1,				    /**< Motor 12 digital output 2 */
-	EN_SOD_MOTOR12_2,				    /**< Motor 12 digital output 3 */
-	EN_SOD_MOTOR12_3,					/**< Motor 12 digital output 4 */
+	EN_SOD_MOTOR_RIGHT_0,					/**< Motor 12 digital output 1 */
+	EN_SOD_MOTOR_RIGHT_1,				    /**< Motor 12 digital output 2 */
+	EN_SOD_MOTOR_LEFT_0,				    /**< Motor 12 digital output 3 */
+	EN_SOD_MOTOR_LEFT_1,					/**< Motor 12 digital output 4 */
 	EN_SODPWM_ENABLE_MOTOR1,			/**< Digital out PWM on  Motor1 */
 	EN_SODPWM_ENABLE_MOTOR2,			/**< Digital out PWM on  Motor2 */
 	EN_SOD_LEFT_FLASHER,				/**< Digital out for Left Flasher */
