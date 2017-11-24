@@ -163,6 +163,7 @@ void task20ms(void) {
   processADCconversion();
   processInputBuffer();
   processOutputBuffer();
+  motorsCyclic();
 }
 
 
@@ -176,7 +177,6 @@ void task20ms(void) {
 void task40ms(void) {
 	brakeCyclic();
 	lowBeamCyclic();
-  motorsCyclic();
 };
 
 /**
