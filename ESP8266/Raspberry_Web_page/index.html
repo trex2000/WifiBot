@@ -5,7 +5,7 @@
     position: absolute;
     left: 300px;
     top: 50px;
-  	width:600px;
+  	width:300px;
   	height:300px;
   	border:1px solid #7F9DB9;
   	overflow:auto;
@@ -38,6 +38,12 @@
       width: 100px;
       text-align:center;
   }
+  #video {
+      position: absolute;
+      left: 650px;
+      top: 200px;
+  }
+
   </style>
 <script type="text/javascript">
 var socket;
@@ -122,5 +128,7 @@ function onkey(event){ if(event.keyCode==13){ send(); } }
           <input type="button" id="btnDown" value="Down" onmousedown="GPIO_ON(4)" onmouseup="GPIO_OFF(4)" ontouchstart="GPIO_ON(4)" ontouchend="GPIO_OFF(4)"/>
           <input type="button" id="btnLeft" value="Left" onmousedown="GPIO_ON(27)" onmouseup="GPIO_OFF(27)" ontouchstart="GPIO_ON(27)" ontouchend="GPIO_OFF(27)"/>
           <input type="button" id="btnRight" value="Right" onmousedown="GPIO_ON(22)" onmouseup="GPIO_OFF(22)" ontouchstart="GPIO_ON(22)" ontouchend="GPIO_OFF(22)"/>
+          <embed  src="localstream1234.asx" id="video" width="800" height="460"/>
+
 </body>
 </html>
