@@ -68,6 +68,17 @@ typedef enum en_movement_request_states {
 } EN_MOVEMENT_REQUEST_STATES;
 
 /**
+ * @brief Enumeration of movement directions
+ *
+ * Enumeration of movement directions
+ */
+typedef enum en_movement_directions {
+	EN_STATE_FORWARD ,				/**< Forward */
+	EN_STATE_BACKWARD ,				/**< Backward */
+	EN_NUMBER_OF_MOVEMENT_STATES ,      /**< Number of states*/
+} EN_MOVEMENT_DIRECTIONS;
+
+/**
  * @brief union of flags
  *
  *  union of flags
@@ -85,7 +96,7 @@ uint8_t motorSpeed_u8;
  *
  *  enum of states
  */
-EN_MOVEMENT_STATES motorStates_en = EN_STATE_IDLE;
+EN_MOVEMENT_STATES motorStates_en;
 
 /**
  * @brief enum of requests states
@@ -95,21 +106,7 @@ EN_MOVEMENT_STATES motorStates_en = EN_STATE_IDLE;
 EN_MOVEMENT_REQUEST_STATES motorReqStates_en;
 
 
-#define FLAG_DIRECTION_UP flags8_motors_u.bits.b0
-#define FLAG_DIRECTION_DOWN flags8_motors_u.bits.b1
-#define FLAG_DIRECTION_LEFT flags8_motors_u.bits.b2
-#define FLAG_DIRECTION_RIGHT flags8_motors_u.bits.b3
-#define FLAG_STEERING_LEFT_ACTIVE flags8_motors_u.bits.b4
-#define FLAG_STEERING_RIGHT_ACTIVE flags8_motors_u.bits.b5
-#define UNUSED6 flags8_motors_u.bits.b6
-#define UNUSED7 flags8_motors_u.bits.b7
-
-/**
- * @brief maximum engine duty cycle
- *
- * maximum engine duty cycle
- */
-#define MOTOR_DIRECTION_CHANGE_DELAY (120u/40u)
+#define MOTOR_DIRECTION flags8_motors_u.bits.b0
 
 
 /**
@@ -153,6 +150,8 @@ EN_MOVEMENT_REQUEST_STATES motorReqStates_en;
  *engine steering speed
  */
 #define MOTOR_STEERING_SPEED 20u
+
+#define delayBetweenDirectionChange (350u/20u)
 /**
 * @brief Implementation of function that handles the initialization of motor control
 *
@@ -163,8 +162,8 @@ EN_MOVEMENT_REQUEST_STATES motorReqStates_en;
 void motorsInit()
 {
 	motorStates_en=EN_STATE_IDLE;
-	flags8_motors_u.byte=0;
 	motorSpeed_u8=0;
+	MOTOR_DIRECTION = EN_STATE_FORWARD;
 }
 
 
@@ -242,7 +241,7 @@ void motorsInputsAQ()
 */
 void motorsSM()
 {
-
+	static uint8_t delayBetweenDirectionChangeCounter = 0;
 
 	switch(motorStates_en)
 	{
@@ -320,26 +319,68 @@ void motorsSM()
 		break;
 	}
 
+	if ((motorSpeed_u8 == 0) && (motorReqStates_en == EN_STATE_REQ_ACCELERATION))
+	{
+		if (delayBetweenDirectionChangeCounter == 0)
+		{
+			MOTOR_DIRECTION = EN_STATE_FORWARD;
+			delayBetweenDirectionChangeCounter = delayBetweenDirectionChange;
+		}
+		delayBetweenDirectionChangeCounter--;
+	}
+	if ((motorSpeed_u8 == 0) && (motorReqStates_en == EN_STATE_REQ_DECELERATION))
+	{
+		if (delayBetweenDirectionChangeCounter == 0)
+		{
+			MOTOR_DIRECTION = EN_STATE_BACKWARD;
+			delayBetweenDirectionChangeCounter = delayBetweenDirectionChange;
+		}
+		delayBetweenDirectionChangeCounter--;
+	}
+
 	switch(motorStates_en)
 	{
 		case EN_STATE_ACCELERATION:
-			if ((motorSpeed_u8+MOTOR_SPEED_STEP_UP)<=MAX_MOTOR_SPEED)
-				{
-					if(motorSpeed_u8 < MOTOR_MIN_SPEED)
+			if(MOTOR_DIRECTION == EN_STATE_FORWARD)
+			{
+				if ((motorSpeed_u8+MOTOR_SPEED_STEP_UP)<=MAX_MOTOR_SPEED)
 					{
-						motorSpeed_u8 = MOTOR_MIN_SPEED;
+						if(motorSpeed_u8 < MOTOR_MIN_SPEED)
+						{
+							motorSpeed_u8 = MOTOR_MIN_SPEED;
+						}
+						else
+						{
+							motorSpeed_u8+=MOTOR_SPEED_STEP_UP;
+						}
 					}
 					else
 					{
-						motorSpeed_u8+=MOTOR_SPEED_STEP_UP;
+						motorSpeed_u8=MAX_MOTOR_SPEED;
 					}
-				}
-				else
-				{
-					motorSpeed_u8=MAX_MOTOR_SPEED;
-				}
+			}
+			if(MOTOR_DIRECTION == EN_STATE_BACKWARD)
+			{
+				if ((motorSpeed_u8-MOTOR_SPEED_STEP_DOWN)>=0)
+					{
+						if (motorSpeed_u8 <= MOTOR_MIN_SPEED)
+						{
+							motorSpeed_u8 = 0;
+						}
+						else
+						{
+							motorSpeed_u8-=MOTOR_SPEED_STEP_DOWN;
+						}
+					}
+					else
+					{
+						motorSpeed_u8=0;
+					}
+			}
 		break;
 		case EN_STATE_DECELERATION:
+		if(MOTOR_DIRECTION == EN_STATE_FORWARD)
+		{
 			if ((motorSpeed_u8-MOTOR_SPEED_STEP_DOWN)>=0)
 				{
 					if (motorSpeed_u8 <= MOTOR_MIN_SPEED)
@@ -355,6 +396,25 @@ void motorsSM()
 				{
 					motorSpeed_u8=0;
 				}
+		}
+		if(MOTOR_DIRECTION == EN_STATE_BACKWARD)
+		{
+			if ((motorSpeed_u8+MOTOR_SPEED_STEP_UP)<=MAX_MOTOR_SPEED)
+				{
+					if(motorSpeed_u8 < MOTOR_MIN_SPEED)
+					{
+						motorSpeed_u8 = MOTOR_MIN_SPEED;
+					}
+					else
+					{
+						motorSpeed_u8+=MOTOR_SPEED_STEP_UP;
+					}
+				}
+				else
+				{
+					motorSpeed_u8=MAX_MOTOR_SPEED;
+				}
+		}
 		break;
 		case EN_STATE_IDLE:
 			if ((motorSpeed_u8-MOTOR_SPEED_STEP_DOWN_IDLE)>=0)
@@ -379,7 +439,7 @@ void motorsSM()
 		default:
 		break;
 	}
-
+	Serial.println(motorSpeed_u8);
 }
 
 
@@ -399,10 +459,27 @@ void motorsActuator()
 		case EN_STATE_ACCELERATION:
 		case EN_STATE_DECELERATION:
 		case EN_STATE_IDLE:
-			setOutputPin (EN_SOD_MOTOR_RIGHT_0, 0);
-			setOutputPin (EN_SOD_MOTOR_RIGHT_1, 1);
-			setOutputPin (EN_SOD_MOTOR_LEFT_0, 0);
-			setOutputPin (EN_SOD_MOTOR_LEFT_1, 1);
+			if (MOTOR_DIRECTION == EN_STATE_FORWARD)
+			{
+				setOutputPin (EN_SOD_MOTOR_RIGHT_0, 0);
+				setOutputPin (EN_SOD_MOTOR_RIGHT_1, 1);
+				setOutputPin (EN_SOD_MOTOR_LEFT_0, 0);
+				setOutputPin (EN_SOD_MOTOR_LEFT_1, 1);
+			}
+			else if (MOTOR_DIRECTION == EN_STATE_BACKWARD)
+			{
+				setOutputPin (EN_SOD_MOTOR_RIGHT_0, 1);
+				setOutputPin (EN_SOD_MOTOR_RIGHT_1, 0);
+				setOutputPin (EN_SOD_MOTOR_LEFT_0, 1);
+				setOutputPin (EN_SOD_MOTOR_LEFT_1, 0);
+			}
+			else
+			{
+				setOutputPin (EN_SOD_MOTOR_RIGHT_0, 0);
+				setOutputPin (EN_SOD_MOTOR_RIGHT_1, 0);
+				setOutputPin (EN_SOD_MOTOR_LEFT_0, 0);
+				setOutputPin (EN_SOD_MOTOR_LEFT_1, 0);
+			}
 			break;
 		case EN_STATE_STEERING_LEFT:
 			setOutputPin (EN_SOD_MOTOR_RIGHT_0, 0);
@@ -443,4 +520,25 @@ void motorsActuator()
 		setOutputPin(EN_SODPWM_ENABLE_MOTOR2, 0);
 	}
 
+}
+
+int getMotorDirection()
+{
+	if (MOTOR_DIRECTION == EN_STATE_FORWARD)
+	{
+		return 1;
+	}
+	if (MOTOR_DIRECTION == EN_STATE_BACKWARD)
+	{
+		return 0;
+	}
+}
+
+int getMotorSpeed()
+{
+	if (motorSpeed_u8 > 0)
+	{
+		return 1;
+	}
+	return 0;
 }

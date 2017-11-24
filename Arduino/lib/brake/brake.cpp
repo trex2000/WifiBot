@@ -27,6 +27,7 @@
 #include "custom_types.h"
 #include "brake.h"
 #include "IO_extern.h"
+#include "motors_extern.h"
 
 
 typedef enum en_brakeLight_states {
@@ -68,6 +69,9 @@ flags8 flags8_brake_u;
 
 #define TIME_BRAKE_STUCK_DETECTION (1000u/40u)       /**< 1 sec in 40 ms cyclic task*/
 
+#define FORWARD 1
+#define BACKWARD 0
+#define MOVING 1
 /**
 * @brief Init function of the brake functionality
 *
@@ -107,7 +111,18 @@ void brakeInputsAQ()
 {
 	uint8_t cntBrakeInputStuckDetection_lu8;
 
-	BRAKE_PEDAL_INPUT = GetInputPin(EN_SID_WIFI_CONTROL_DOWN);
+if (getMotorSpeed() == MOVING)
+{
+	switch (getMotorDirection())
+	{
+		case FORWARD:
+			BRAKE_PEDAL_INPUT = GetInputPin(EN_SID_WIFI_CONTROL_DOWN);
+		break;
+		case BACKWARD:
+			BRAKE_PEDAL_INPUT = GetInputPin(EN_SID_WIFI_CONTROL_UP);
+		break;
+	}
+}
 	LIGHT_STATE = getLightsState();
 
 	if(BRAKE_PEDAL_INPUT)

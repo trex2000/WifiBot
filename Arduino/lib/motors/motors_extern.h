@@ -36,7 +36,7 @@
 #ifndef MOTORS_EXTERN_H_
 #define MOTORS_EXTERN_H_
 
-	
+
 /**
 * @brief Implementation of function that handles the initialization of motor control
 *
@@ -55,6 +55,15 @@ void motorsInit();
 */
 extern void motorsCyclic();
 
+/**
+* @brief Implementation of function that handles the motor directions
+*
+* Implementation of function that handles the motor directions
+* @return int
+* @note int function with int return.
+*/
+int getMotorDirection();
 
+int getMotorSpeed();
 
 #endif /* MOTORS_EXTERN_H_ */
