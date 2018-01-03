@@ -200,15 +200,17 @@ void lowBeamActuator()
 
 int getLightsState()
 {
+	static int temp = 0;
 	if (GetInputPin(EN_SIA_LIGHTSENSOR) <= LIGHT_SENSOR_VALUE_WHEN_DARK)
 	{
-		return 1;
+		temp = 1;
 	}
 	else
 	{
 		if (GetInputPin(EN_SIA_LIGHTSENSOR) >= LIGHT_SENSOR_VALUE_WHEN_BREIGHT)
 			{
-			return 0;
-			}
+			temp = 0;
+		  }
 	}
+	return temp;
 }

@@ -41,6 +41,7 @@
 #include "motors_extern.h"
 #include "flasher_extern.h"
 #include "brake_extern.h"
+#include "watchdog_extern.h"
 
 /*FOR PWM*/
 #include <avr/io.h>
@@ -126,6 +127,7 @@ void setup()
 	flasherInit();
 	lowBeamInit();
   brakeInit();
+  watchdogInit();
 	}
 
 
@@ -214,7 +216,7 @@ void task1000ms(void) {
 //	for(index_u8=0;index_u8<=EN_NUMBER_OF_ELEMENTS_INPUT;index_u8++){
 //		AddSerialDebugData( getOutputs((EN_OUTPUT_PINS)index_u8) );
 //	}
-
+watchdogCyclic();
 }
 
 /**

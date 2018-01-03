@@ -47,6 +47,7 @@ typedef enum en_input_pins {
 	EN_SID_WIFI_CONTROL_DOWN ,          /**< WifiControl Down*/
 	EN_SID_WIFI_CONTROL_RIGHT ,         /**< WifiControl Right*/
 	EN_SID_WIFI_CONTROL_LEFT ,          /**< WifiControl Left */
+	EN_SID_RPI_CHECK ,          /**< Raspberry Pi checking pin */
 	EN_NUMBER_OF_ELEMENTS_INPUT ,       /**< Number of input pins*/
 } EN_INPUT_PINS;
 
@@ -78,7 +79,7 @@ typedef enum en_output_pins {
  *
  * Macro for testing if a bit is set
  */
-#define CHECK_BIT(var,pos) ((var) & (1<<(pos))) 
+#define CHECK_BIT(var,pos) ((var) & (1<<(pos)))
 
 /**
  * @brief Macro for max PWM value
@@ -91,7 +92,7 @@ typedef enum en_output_pins {
  *
  * Defines maximum number of analog channels
  */
-#define MAX_ADC_CHANNELS 6u 
+#define MAX_ADC_CHANNELS 6u
 
 /**
  * @brief Macro implementation for starting the ADC conversion

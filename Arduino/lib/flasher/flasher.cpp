@@ -33,6 +33,7 @@
 #include "custom_types.h"
 #include "flasher.h"
 #include "IO_extern.h"
+#include "watchdog_extern.h"
 /**
  * @brief Enumeration of movement states
  *
@@ -129,15 +130,13 @@ void flasherCyclic()
 void flasherInputsAQ()
 {
 
-	if (GetInputPin((EN_INPUT_PINS)EN_SID_HAZARD_BUTTON))
+	if (getWatchdogState())
 	{
 		flasherReqStates_en = EN_FLA_REQ_STATE_HAZARD;
 	}
 	else
 	{
-		if (
-			GetInputPin((EN_INPUT_PINS)EN_SID_WIFI_CONTROL_LEFT) && GetInputPin((EN_INPUT_PINS)EN_SID_WIFI_CONTROL_RIGHT)
-			)
+		if (GetInputPin((EN_INPUT_PINS)EN_SID_WIFI_CONTROL_LEFT) && GetInputPin((EN_INPUT_PINS)EN_SID_WIFI_CONTROL_RIGHT))
 		{
 			flasherReqStates_en = EN_FLA_REQ_STATE_ERROR;
 		}

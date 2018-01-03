@@ -243,6 +243,35 @@ void motorsSM()
 {
 	static uint8_t delayBetweenDirectionChangeCounter = 0;
 
+	if ((motorSpeed_u8 == 0) && (motorReqStates_en == EN_STATE_REQ_ACCELERATION) && (motorStates_en == EN_STATE_IDLE))
+	{
+			MOTOR_DIRECTION = EN_STATE_FORWARD;
+
+	}
+	if ((motorSpeed_u8 == 0) && (motorReqStates_en == EN_STATE_REQ_DECELERATION) && (motorStates_en == EN_STATE_IDLE))
+	{
+			MOTOR_DIRECTION = EN_STATE_BACKWARD;
+	}
+
+	/*if ((motorSpeed_u8 == 0) && (motorReqStates_en == EN_STATE_REQ_ACCELERATION))
+	{
+		if ((delayBetweenDirectionChangeCounter == 0) && (motorStates_en == EN_STATE_IDLE))
+		{
+			MOTOR_DIRECTION = EN_STATE_FORWARD;
+			delayBetweenDirectionChangeCounter = delayBetweenDirectionChange;
+		}
+		delayBetweenDirectionChangeCounter--;
+	}
+	if ((motorSpeed_u8 == 0) && (motorReqStates_en == EN_STATE_REQ_DECELERATION))
+	{
+		if ((delayBetweenDirectionChangeCounter == 0) && (motorStates_en == EN_STATE_IDLE))
+		{
+			MOTOR_DIRECTION = EN_STATE_BACKWARD;
+			delayBetweenDirectionChangeCounter = delayBetweenDirectionChange;
+		}
+		delayBetweenDirectionChangeCounter--;
+	}*/
+
 	switch(motorStates_en)
 	{
 		case EN_STATE_ACCELERATION:
@@ -319,24 +348,8 @@ void motorsSM()
 		break;
 	}
 
-	if ((motorSpeed_u8 == 0) && (motorReqStates_en == EN_STATE_REQ_ACCELERATION))
-	{
-		if (delayBetweenDirectionChangeCounter == 0)
-		{
-			MOTOR_DIRECTION = EN_STATE_FORWARD;
-			delayBetweenDirectionChangeCounter = delayBetweenDirectionChange;
-		}
-		delayBetweenDirectionChangeCounter--;
-	}
-	if ((motorSpeed_u8 == 0) && (motorReqStates_en == EN_STATE_REQ_DECELERATION))
-	{
-		if (delayBetweenDirectionChangeCounter == 0)
-		{
-			MOTOR_DIRECTION = EN_STATE_BACKWARD;
-			delayBetweenDirectionChangeCounter = delayBetweenDirectionChange;
-		}
-		delayBetweenDirectionChangeCounter--;
-	}
+
+
 
 	switch(motorStates_en)
 	{
@@ -439,7 +452,7 @@ void motorsSM()
 		default:
 		break;
 	}
-	Serial.println(motorSpeed_u8);
+	//Serial.println(motorSpeed_u8);
 }
 
 

@@ -67,11 +67,8 @@ flags8 flags8_brake_u;
 #define BRAKE_PEDAL_INPUT flags8_brake_u.bits.b0
 #define LIGHT_STATE flags8_brake_u.bits.b1
 
-#define TIME_BRAKE_STUCK_DETECTION (1000u/40u)       /**< 1 sec in 40 ms cyclic task*/
-
 #define FORWARD 1
 #define BACKWARD 0
-#define MOVING 1
 /**
 * @brief Init function of the brake functionality
 *
@@ -109,10 +106,7 @@ void brakeCyclic()
 
 void brakeInputsAQ()
 {
-	uint8_t cntBrakeInputStuckDetection_lu8;
 
-if (getMotorSpeed() == MOVING)
-{
 	switch (getMotorDirection())
 	{
 		case FORWARD:
@@ -122,24 +116,9 @@ if (getMotorSpeed() == MOVING)
 			BRAKE_PEDAL_INPUT = GetInputPin(EN_SID_WIFI_CONTROL_UP);
 		break;
 	}
-}
+
 	LIGHT_STATE = getLightsState();
 
-	if(BRAKE_PEDAL_INPUT)
-	{
-		if(cntBrakeInputStuckDetection_lu8>0)
-		{
-			cntBrakeInputStuckDetection_lu8--;
-		}
-		else
-		{
-			//seterror(brake)
-		}
-	}
-	else
-	{
-		cntBrakeInputStuckDetection_lu8 = TIME_BRAKE_STUCK_DETECTION;
-	}
 	if(BRAKE_PEDAL_INPUT)  //brake button pressed
 	{
 		brakeReqStates_en = EN_BRAKE_REQ_STATE_BRAKING;
@@ -176,7 +155,6 @@ void brakeSM()
 					brakeStates_en = EN_BRAKE_STATE_LIGHTS_OFF;
 				default: //keep last value
 				break;
-
 			}
 		break;
 		case EN_BRAKE_STATE_STOP_LIGHT:
@@ -222,7 +200,7 @@ void brakeActuator()
 {
 	if(brakeStates_en == EN_BRAKE_STATE_BRAKING)
 	{
-		setOutputPin(EN_SODPWM_BRAKE_LIGHT, 99);
+		setOutputPin(EN_SODPWM_BRAKE_LIGHT, 100);
 	}
 
 	if(brakeStates_en == EN_BRAKE_STATE_STOP_LIGHT)

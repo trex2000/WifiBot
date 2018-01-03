@@ -1,0 +1,7 @@
+#User buttons definitions
+#maximum of six buttons
+#buttonname, macro
+up,u1.sh,u0.sh
+down,d1.sh,d0.sh
+left,l1.sh,l0.sh
+right,r1.sh,r0.sh
