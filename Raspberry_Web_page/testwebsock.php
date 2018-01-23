@@ -29,10 +29,10 @@ class echoServer extends WebSocketServer {
 }
 
 $echo = new echoServer("192.168.200.32","80");
-$setmode17 = shell_exec("/usr/local/bin/gpio -g mode 17 out");
-$setmode4  = shell_exec("/usr/local/bin/gpio -g mode 4 out");
-$setmode22 = shell_exec("/usr/local/bin/gpio -g mode 22 out");
-$setmode27 = shell_exec("/usr/local/bin/gpio -g mode 27 out");
+$setmode17 = shell_exec("/usr/local/bin/gpio -g mode 17 out"); //UP
+$setmode4  = shell_exec("/usr/local/bin/gpio -g mode 4 out"); //Down
+$setmode22 = shell_exec("/usr/local/bin/gpio -g mode 22 out"); //Right
+$setmode27 = shell_exec("/usr/local/bin/gpio -g mode 27 out"); //Left
 
 try {
   $echo->run();

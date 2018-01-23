@@ -50,8 +50,8 @@
 				$index = strpos($line, ',');
 				if ($index !== false) {
 					$buttonName = substr($line, 0, $index);
-          $macroName1 = substr($line, -12,5);
-					$macroName0 = substr($line, -6,5);
+          $macroName1 = substr($line, -11,5);
+					$macroName0 = substr($line, -5,5);
 					$buttonString .= '<input id="' . $buttonName . '" type="button" value="' . $buttonName . '" onmousedown="send_cmd(' . "'sy " . $macroName1 . "'" . ')" onmouseup="send_cmd(' . "'sy " . $macroName0 . "'" . ')" >' . "\r\n";
 					$buttonCount += 1;
 				}
@@ -332,11 +332,6 @@
             </div>
          </div>
       </div>
-      <div id="log"></div>
-      <input type="button" id="btnUp" value="Up" onmousedown="send_cmd(' . "'sy " . "teszt.sh" . "'" . ')" onmouseup="GPIO_OFF(17)" ontouchstart="GPIO_ON(17)" ontouchend="GPIO_OFF(17)"/>
-      <input type="button" id="btnDown" value="Down" onmousedown="GPIO_ON(4)" onmouseup="GPIO_OFF(4)" ontouchstart="GPIO_ON(4)" ontouchend="GPIO_OFF(4)"/>
-      <input type="button" id="btnLeft" value="Left" onmousedown="GPIO_ON(27)" onmouseup="GPIO_OFF(27)" ontouchstart="GPIO_ON(27)" ontouchend="GPIO_OFF(27)"/>
-      <input type="button" id="btnRight" value="Right" onmousedown="GPIO_ON(22)" onmouseup="GPIO_OFF(22)" ontouchstart="GPIO_ON(22)" ontouchend="GPIO_OFF(22)"/>
 	  <?php simple_button(); ?>
       <div class="container-fluid text-center liveimage">
          <div><img id="mjpeg_dest" <?php echo getLoadClass() . getImgWidth();?>
