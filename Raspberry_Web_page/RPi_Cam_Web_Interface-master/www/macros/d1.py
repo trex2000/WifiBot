@@ -2,5 +2,5 @@
 import pigpio
 
 pi = pigpio.pi()
-pi.set_mode(17, pigpio.OUTPUT)
-pi.write(17,0)
+pi.set_mode(4, pigpio.OUTPUT)
+pi.write(4,1)

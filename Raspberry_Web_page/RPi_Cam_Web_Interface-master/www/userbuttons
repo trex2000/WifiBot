@@ -2,6 +2,6 @@
 #maximum of six buttons
 #buttonname, macro
 up,u1.py,u0.py
-down,d1.sh,d0.py
-left,l1.sh,l0.sh
-right,r1.sh,r0.sh
+down,d1.py,d0.py
+left,l1.py,l0.py
+right,r1.py,r0.py
